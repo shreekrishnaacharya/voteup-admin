@@ -16,9 +16,21 @@ const getApiRequest = async (requestData) => {
     return result;
 }
 
-async function getVoterList() {
+async function getVoterList(pages) {
     return await getApiRequest({
-        url: "/voters",
+        url: "/voter",
+        data: {
+            size: 5,
+            ...pages
+        }
+    }).then((result) => {
+        return result;
+    });
+}
+
+async function getVoterView(id) {
+    return await getApiRequest({
+        url: "/voter/" + id,
     }).then((result) => {
         return result;
     });
@@ -26,5 +38,6 @@ async function getVoterList() {
 
 
 export {
-    getVoterList
+    getVoterList,
+    getVoterView
 };

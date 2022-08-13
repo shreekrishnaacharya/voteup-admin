@@ -5,23 +5,14 @@ import {
     Card,
     Box,
     Divider,
-    Button,
-    IconButton,
 } from '@mui/material';
 import DoneTwoToneIcon from '@mui/icons-material/DoneTwoTone';
-import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
 import Label from 'components/Label';
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 import Text from 'components/Text';
 import React from "react";
-import { useSelector } from "react-redux";
-import { useState } from 'react';
-import ChangePassword from './ChangePassword';
 
-
-export default function AccountDetail() {
-    const userProfile = useSelector(state => state.profile);
-    const [pstate, setPstate] = useState(false);
+export default function AccountDetail({ userProfile }) {
     return (
         <Card>
             <Box
@@ -62,17 +53,6 @@ export default function AccountDetail() {
                             <Text color="black">
                                 <b>*****************</b>
                             </Text>
-                            <IconButton
-                                size="small"
-                                sx={{ marginLeft: 2 }}
-                                onClick={() => {
-                                    setPstate(true)
-                                }}
-                                component="label" color='primary'>
-                                <ChangeCircleIcon />
-                                Change
-                            </IconButton>
-
                         </Grid>
                         <Grid item xs={12} sm={4} md={3} textAlign={{ sm: 'right' }}>
                             <Box pr={3} pb={2}>
@@ -112,7 +92,6 @@ export default function AccountDetail() {
                         </Grid>
                     </Grid>
                 </Typography>
-                <ChangePassword open={pstate} setOpen={setPstate} />
             </CardContent>
         </Card>)
 }

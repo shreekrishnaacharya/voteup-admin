@@ -3,13 +3,20 @@ import { useMemo } from "react";
 
 import PropTypes from "prop-types";
 
+import { Box, Table as MuiTable, TableBody, TableContainer, TableRow, TableCell } from "@mui/material";
+import { isEmpty } from "_services";
 
-function Table({ columns, rows }) {
+function Table({ columns, rows, pagination }) {
 
-    const renderColumns = columns.map(({ name, label, align }, key) => {
+    const renderColumns = columns.map(({ name, label, align, type }, key) => {
         let pl;
         let pr;
-
+        if (type == "serial_no") {
+            name = "serial_no";
+            if (label == undefined) {
+                label = "SNO"
+            }
+        }
         if (key === 0) {
             pl = 3;
             pr = 3;
@@ -21,29 +28,39 @@ function Table({ columns, rows }) {
             pr = 1;
         }
         return (
-            <th
+            <Box
                 key={name}
-                className="ui primary"
-                style={{
-                    textAlign: align,
-                    fontSize: '14px',
-                    fontWeight: 'bold',
-                    opacity: "0.9",
-                    borderBottom: '1px solid #eee'
-                }}
+                component="th"
+                pt={1.5}
+                pb={1.25}
+                pl={align === "left" ? pl : 3}
+                pr={align === "right" ? pr : 3}
+                textAlign={align}
+                color="primary"
+                opacity={0.9}
+                borderBottom={`1px solid #eee`}
             >
                 {label ? label : name.toUpperCase()}
-            </th >
+            </Box>
         );
     });
-
+    let serial_no = 1
+    if (!isEmpty(pagination)) {
+        serial_no = ((pagination.current - 1) * pagination.size) + 1;
+    }
     const renderRows = rows.map((row, key) => {
         const rowKey = `row-${key}`;
-        const tableRow = columns.map(({ name, align }) => {
-            if (!row.hasOwnProperty(name)) {
+        const tableRow = columns.map(({ name, align, type }) => {
+            if (!row.hasOwnProperty(name) && type !== "serial_no") {
                 return;
             }
-            let tdata = row[name];
+            let tdata = null;
+            if (type === "serial_no") {
+                tdata = serial_no;
+                serial_no++;
+            } else {
+                tdata = row[name]
+            }
             let tdprops = {};
             let tdstyle = { padding: 5, margin: 2, textAlign: align };
             if (Array.isArray(tdata)) {
@@ -53,87 +70,42 @@ function Table({ columns, rows }) {
             if (tdprops["style"]) {
                 tdstyle = { ...tdstyle, ...tdprops["style"] };
             }
-            return (<td key={name + key}  {...tdprops} style={tdstyle}>
-                {tdata}</td>);
+            return (<TableCell key={name + key}  {...tdprops} style={tdstyle}>
+                {tdata}</TableCell>);
         });
-        return <tr key={rowKey}>{tableRow}</tr>;
+        return <TableRow key={rowKey}>{tableRow}</TableRow>;
     });
 
     return useMemo(
         () => (
-            <div>
-                <table className="ui celled striped table">
-                    <thead>
-                        <tr>{renderColumns}</tr>
-                    </thead>
-                    <tbody>{renderRows}</tbody>
-                </table>
-            </div>
+            <TableContainer>
+                <MuiTable>
+                    <Box component="thead"
+                        sx={{
+                            backgroundColor: '#ff6c00f7',
+                            color: '#fff'
+                        }}
+                    >
+                        <TableRow>{renderColumns}</TableRow>
+                    </Box>
+                    <TableBody>{renderRows}</TableBody>
+                </MuiTable>
+            </TableContainer>
         ), [columns, rows]);
 }
-
-const Pagination = (props) => {
-    const { totalPages, currentPage, onClick, padding } = props;
-    let leftPage = [];
-    let currentCount = currentPage < 1 ? 1 : currentPage;
-    if (currentPage > padding + 1) {
-        currentCount -= padding;
-        leftPage[0] = <a key={1} className='ui label' onClick={(e) => onClick(e, 1)}><i>&lt;&lt;</i></a>
-        leftPage[1] = <a key={currentPage - 1} className='ui label' onClick={(e) => onClick(e, currentPage - 1)}><i>&lt;</i></a>
-    } else {
-        currentCount = 1;
-    }
-    let currentPageLink = [];
-    let counter = 0;
-    while (currentCount <= (currentPage + padding)) {
-        const pid = currentCount;//wow, hahaha this is interesting problem i came accross;
-        currentPageLink[counter] = <a key={pid} className={`ui label ${currentPage == pid ? 'teal' : ''}`} onClick={(e) => { onClick(e, pid) }}>{pid}</a>
-        if (pid >= totalPages) {
-            break;
-        }
-        counter++;
-        currentCount++;
-    }
-    currentCount--;
-    let rightPage = [];
-    if ((currentPage + padding) < totalPages) {
-        rightPage[0] = <a key={currentPage + 1} className='ui label' onClick={(e) => onClick(e, currentPage + 1)}><i>&gt;</i></a>
-        rightPage[1] = <a key={totalPages} className='ui label' onClick={(e) => onClick(e, totalPages)}><i>&gt;&gt;</i></a>
-    }
-    return (
-        <div className="ui mini horizontal divided list">
-            <div className="item">
-                <div className="ui circular labels">
-                    {leftPage}
-                    {currentPageLink}
-                    {rightPage}
-                </div>
-            </div>
-        </div>
-    );
-};
-
 
 // Setting default values for the props of Table
 Table.defaultProps = {
     columns: [],
     rows: [],
+    pagination: {}
 };
 
 // Typechecking props for the Table
 Table.propTypes = {
     columns: PropTypes.arrayOf(PropTypes.object),
     rows: PropTypes.arrayOf(PropTypes.object),
+    pagination: PropTypes.object
 };
 
-Pagination.defaultProps = {
-    padding: 2
-};
-
-Pagination.propTypes = {
-    padding: PropTypes.number,
-    onClick: PropTypes.func.isRequired,
-    totalPages: PropTypes.number.isRequired,
-    currentPage: PropTypes.number.isRequired,
-};
-export { Table, Pagination };
+export { Table };

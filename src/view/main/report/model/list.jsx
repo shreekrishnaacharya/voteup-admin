@@ -11,13 +11,17 @@ import {
 } from "@mui/material";
 
 const stat = {
-  "Active": {
-    "batch": "active",
-    "color": "success"
+  "Pending": {
+    "batch": "pending",
+    "color": "info"
   },
-  "Inactive": {
-    "batch": "inactive",
+  "Ignore": {
+    "batch": "ignore",
     "color": "secondary"
+  },
+  "Action": {
+    "batch": "closed",
+    "color": "primary"
   }
 };
 function Pimg({ image, name, code }) {
@@ -65,31 +69,27 @@ function Name({ name, code }) {
 
 
 function Status({ status }) {
+  console.log(stat[status], status)
   return (
-    <Badge variant="gradient" badgeContent={status} color={status == "Active" ? "success" : "warning"} size="extra-small" />
+    <Badge variant="gradient" badgeContent={stat[status].batch} color={stat[status].color} size="extra-small" />
   );
 }
 
-function Kyc({ kyc }) {
+function Type({ type }) {
   return (
-    <Badge sx={{
-      ".MuiBadge-badge": {
-        width: "70px"
-      }
-    }} variant="gradient" badgeContent={kyc} color={kyc == "Verified" ? "success" : "warning"} />
+    <Badge variant="gradient" badgeContent={type} color={type == "POST" ? "primary" : "secondary"} size="extra-small"/>
   );
 }
 const modelList = (list, handleView) => {
-  return list.map(({ _id, name, status, contact, email, kyc, image }) => {
+  return list.map(({ _id, user, status, remark, type, create_at }) => {
     return {
-      image: <Pimg image={image} name={name} />,
-      name: <Text text={name} />,
-      email: <Text text={email} />,
-      contact: <Text text={contact} />,
-      kyc: <Kyc kyc={kyc} />,
+      user: <Text text={user} />,
+      remark: <Text text={remark} warpLength={1} />,
+      type: <Type type={type} />,
       status: <Status status={status} />,
+      create_at: <Text text={create_at} />,
       action: (
-        <a style={{ cursor: "pointer" }} onClick={() => { handleView(_id, name) }}>
+        <a style={{ cursor: "pointer" }} onClick={() => { handleView(_id) }}>
           <Typography
             variant="caption"
             textColor="primary"
@@ -137,6 +137,7 @@ const modelListEmpty = () => {
 // }
 
 const modelPages = (pagination, handleNav) => {
+  console.log(pagination)
   return (
     <Pagination variant="outlined"
       count={Math.ceil(pagination.total / pagination.size)}
@@ -175,21 +176,19 @@ const modelListInit = () => {
   ]
 }
 
-
-
 const columns = [
   { label: "SNO", type: "serial_no", align: "center" },
-  { name: "image", align: "left" },
-  { name: "name", align: "left" },
-  { name: "email", align: "left" },
-  { name: "contact", align: "left" },
-  { name: "kyc", align: "center" },
+  { name: "user", align: "left" },
+  { name: "remark", align: "left" },
+  { name: "create_at", align: "left", label: "Create At" },
+  { name: "type", align: "center" },
   { name: "status", align: "center" },
   { name: "action", align: "center" },
 ];
 
 const Temp = {
-  Status
+  Status,
+  Type
 }
 
 

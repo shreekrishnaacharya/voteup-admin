@@ -35,63 +35,11 @@ const Feed = ({ userModel, feedType }) => {
     });
   }
 
-  const filterPost = (pid) => {
-    setFeeds(postFeeds.filter(e => e._id !== pid));
-  }
 
-  const submitReportForm = (fdata, reset) => {
-    if (fdata.rtype == 0 || isEmpty(fdata.remark)) {
-      enqueueSnackbar("Please complete the from", {
-        variant: 'warning',
-      });
-      return;
-    }
-    addReport(report.postid, fdata).then(e => {
-      if (e.status == 208) {
-        enqueueSnackbar("Already reported", {
-          variant: 'info',
-        });
-        return;
-      }
-      if (e.flag) {
-        enqueueSnackbar("Report submitted", {
-          variant: 'success',
-        });
-        reset()
-        setReport({ open: false, postid: null });
-      } else {
-        enqueueSnackbar("Error in query", {
-          variant: 'error',
-        });
-      }
-    })
-  }
-  const handleMenu = (postid, type) => {
-    if (type == 0) {
-      setReport({ postid: postid, open: true })
-    } else if (type == 2) {
-      setConfirm({ postid: postid, open: true })
-    }
-  }
-  const handleDeleteAction = () => {
-    deletePost(confirm.postid).then(e => {
-      if (e.flag) {
-        enqueueSnackbar("Post deleted", {
-          variant: 'success',
-        });
-        filterPost(confirm.postid)
-      } else {
-        enqueueSnackbar("Error performing query", {
-          variant: 'error',
-        });
-      }
-    })
-    setConfirm({ open: false, postid: null });
-  };
 
   useEffect(() => {
     if (feedType == 'profile') {
-      getPost().then(res => {
+      getPost(userModel._id).then(res => {
         if (res.flag) {
           setFeeds(res.data);
           setLoading(false);
@@ -112,23 +60,20 @@ const Feed = ({ userModel, feedType }) => {
   }, []);
 
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box>
       {loading ? (
         <>
-          <PostLoad />
           <PostLoad />
           <PostLoad />
         </>
       ) : (
         <>
           {postFeeds.map(post => {
-            return <Post key={post._id} post={post} onMenu={handleMenu} userModel={userModel} viewPost={viewPost} />
+            return <Post key={post._id} post={post} viewPost={viewPost} />
           })}
         </>
       )
       }
-      <Report open={report.open} onReport={submitReportForm} onClose={() => { setReport({ open: false, postid: null }) }} />
-      <ConfirmDelete open={confirm.open} onDelete={handleDeleteAction} onClose={() => { setConfirm({ open: false, postid: null }) }} />
     </Box >
   );
 };

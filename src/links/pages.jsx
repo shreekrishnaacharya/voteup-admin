@@ -1,4 +1,4 @@
-const votePages = {
+const voterPages = {
     VOTER: "/voter",
     VOTER_VIEW: "/voter/view",
     VOTER_UPDATE: "/voter/update",
@@ -10,6 +10,14 @@ const reportPages = {
     REPORT_UPDATE: "/report/update",
 }
 
+const feedPages = {
+    FEEDS: "/feeds",
+    FEEDS_VIEW: "/feeds/view",
+}
+
+const postPages = {
+    POST: "/post",
+}
 
 const sitePage = {
     LOGIN: "/guest",
@@ -27,8 +35,10 @@ const pages = {
     GUEST: "/guest",
     HOME: "/",
     ...sitePage,
-    ...votePages,
-    ...reportPages
+    ...voterPages,
+    ...reportPages,
+    ...feedPages,
+    ...postPages
 };
 
 const guestPage = [
@@ -44,4 +54,4 @@ const getFullUrl = (page) => {
     return pages.LOCAL_URL + "#" + page;
 }
 
-export { pages, sitePage, reportPages, votePages, guestPage, getFullUrl };
+export { pages, sitePage, reportPages, voterPages, feedPages, postPages, guestPage, getFullUrl };

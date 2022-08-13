@@ -8,17 +8,17 @@ import PersonalDetail from './editProfile/PersonalDetail';
 import AccountDetail from './editProfile/AccountDetail';
 
 
-function EditProfileTab() {
+function EditProfileTab({userProfile}) {
   return (
     <Grid container spacing={3}>
       <Grid item xs={12}>
-        <UserStory />
+        <UserStory  userProfile={userProfile}/>
       </Grid>
       <Grid item xs={12}>
-        <PersonalDetail />
+        <PersonalDetail userProfile={userProfile} />
       </Grid>
       <Grid item xs={12}>
-        <AccountDetail />
+        <AccountDetail userProfile={userProfile} />
       </Grid>
     </Grid >
   );

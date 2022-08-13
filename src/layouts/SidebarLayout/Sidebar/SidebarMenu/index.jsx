@@ -191,9 +191,20 @@ function SidebarMenu() {
                 <Button
                   disableRipple
                   component={RouterLink}
-                  to={pages.VOTER}
-                  startIcon={<BrightnessLowTwoToneIcon />}
+                  to={pages.FEEDS}
+                  startIcon={<HowToVoteTwoToneIcon />}
                 >
+                  Feeds
+                </Button>
+              </ListItem>
+              <ListItem component="div">
+                <Button
+                  disableRipple
+                  component={RouterLink}
+                  to={pages.VOTER}
+                  startIcon={<AccountCircleTwoToneIcon />}
+                >
+                  Voters
                 </Button>
               </ListItem>
               <ListItem component="div">

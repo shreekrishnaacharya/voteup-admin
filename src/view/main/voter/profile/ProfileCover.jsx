@@ -14,10 +14,6 @@ import coverImage from 'assets/images/cover_image.png'
 import ImageLoader from 'components/ImageLoader';
 
 
-const Input = styled('input')({
-  display: 'none'
-});
-
 const AvatarWrapper = styled(Card)(
   ({ theme }) => `
 
@@ -75,33 +71,15 @@ const CardCoverAction = styled(Box)(
 `
 );
 
-const ProfileCover = ({ user, saveImage }) => {
+const ProfileCover = ({ user }) => {
 
   return (
     <>
       <CardCover>
         <CardMedia image={user ? user.cover : coverImage} />
-        <CardCoverAction>
-          <label htmlFor="icon-coverbutton-file">
-            <Button
-              startIcon={<UploadTwoToneIcon />}
-              variant="contained"
-              component="span"
-            >
-              Change cover
-            </Button>
-          </label>
-        </CardCoverAction>
       </CardCover>
       <AvatarWrapper>
         <Avatar variant="rounded" alt={user?.name} src={user?.image} />
-        <ButtonUploadWrapper>
-          <label htmlFor="icon-button-file">
-            <IconButton component="span" color="primary">
-              <UploadTwoToneIcon />
-            </IconButton>
-          </label>
-        </ButtonUploadWrapper>
       </AvatarWrapper>
       <Box pt={2} pl={2}>
         <Typography gutterBottom variant="h4">
@@ -112,36 +90,6 @@ const ProfileCover = ({ user, saveImage }) => {
           {user?.address1} | {user?.address2} | {user?.state}
         </Typography>
       </Box>
-      <ImageLoader
-        title={'Change Profile Picture'}
-        multiple={false}
-        InputProps={{
-          id: 'icon-button-file',
-          accept: "image/*",
-          name: "icon-button-file"
-        }}
-        isModal={true}
-        cancelName={'Cancel'}
-        saveName={'Save'}
-        onSave={(files, close) => {
-          saveImage({ 'pimage': files }, close);
-        }}
-      />
-      <ImageLoader
-        title={'Change Cover'}
-        multiple={false}
-        InputProps={{
-          id: 'icon-coverbutton-file',
-          accept: "image/*",
-          name: "icon-coverbutton-file"
-        }}
-        cancelName={'Cancel'}
-        saveName={'Save'}
-        isModal={true}
-        onSave={(files, close) => {
-          saveImage({ 'cimage': files }, close);
-        }}
-      />
     </>
   );
 };

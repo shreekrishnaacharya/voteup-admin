@@ -19,7 +19,7 @@ const getApiRequest = async (requestData) => {
 
 async function getPost() {
     return await getApiRequest({
-        url: "/user/mypost",
+        url: "/voter/mypost",
     }).then((result) => {
         return result;
     });

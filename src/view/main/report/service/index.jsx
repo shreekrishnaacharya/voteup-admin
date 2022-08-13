@@ -1,4 +1,3 @@
-import { getJsonForms } from '_services';
 import { getApiRequest as getApi, getJsonForm } from '_services';
 
 
@@ -17,55 +16,10 @@ const getApiRequest = async (requestData) => {
     return result;
 }
 
-async function getFeeds() {
-    return await getApiRequest({
-        url: "/feeds",
-    }).then((result) => {
-        return result;
-    });
-}
 
-async function getPost(id) {
+async function getViewReport(id) {
     return await getApiRequest({
-        url: "/feeds",
-        data: {
-            fk_user_id: id
-        }
-    }).then((result) => {
-        return result;
-    });
-}
-
-async function getRecent() {
-    return await getApiRequest({
-        url: "/feeds",
-        data: { sort: "-id", size: "3" }
-    }).then((result) => {
-        return result;
-    });
-}
-
-async function addPost(idata) {
-    // console.log(getJsonForms(idata));
-    // return;
-    return await getApiRequest({
-        url: "/feeds/",
-        method: "post",
-        data: getJsonForms(idata),
-        headers: { 'Content-Type': 'multipart/form-data' }
-    }).then((result) => {
-        return result;
-    });
-}
-
-async function actionUpdate(id, type) {
-    return await getApiRequest({
-        url: "/feeds/action",
-        method: "post",
-        data: {
-            id,
-            type
-        },
+        url: "/report/" + id,
     }).then((result) => {
         return result;
     });
@@ -73,17 +27,34 @@ async function actionUpdate(id, type) {
 
 async function getViewPost(id) {
     return await getApiRequest({
-        url: "/voter/" + id,
+        url: "/feeds/" + id,
     }).then((result) => {
         return result;
     });
 }
 
+async function getReports(pages) {
+    return await getApiRequest({
+        url: "/report/",
+        data: {
+            size: 5,
+            ...pages
+        }
+    }).then((result) => {
+        return result;
+    });
+}
+async function updateReport(id) {
+    return await getApiRequest({
+        url: "/update/" + id,
+        method: "put",
+    }).then((result) => {
+        return result;
+    });
+}
 export {
-    getFeeds,
-    getRecent,
-    addPost,
-    actionUpdate,
-    getViewPost,
-    getPost
+    updateReport,
+    getViewReport,
+    getReports,
+    getViewPost
 };

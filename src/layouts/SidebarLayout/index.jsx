@@ -1,10 +1,9 @@
 import { Box, alpha, lighten, useTheme } from '@mui/material';
-import { Outlet } from 'react-router-dom';
 
 import Sidebar from './Sidebar';
 import Header from './Header';
 
-const SidebarLayout = () => {
+const SidebarLayout = ({ children }) => {
   const theme = useTheme();
   return (
     <>
@@ -48,8 +47,8 @@ const SidebarLayout = () => {
             }
           }}
         >
-          <Box display="block">
-            <Outlet />
+          <Box mx={2} display="block">
+            {children}
           </Box>
         </Box>
       </Box>

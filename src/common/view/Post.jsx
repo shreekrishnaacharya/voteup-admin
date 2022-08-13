@@ -20,18 +20,13 @@ import MoreHorizTwoToneIcon from '@mui/icons-material/MoreHorizTwoTone';
 import ThumbUpAltTwoToneIcon from '@mui/icons-material/ThumbUpAltTwoTone';
 import ShareTwoToneIcon from '@mui/icons-material/ShareTwoTone';
 import Text from 'components/Text';
-import { ThumbDownAltTwoTone } from '@mui/icons-material';
+import { ThumbDownOffAltTwoTone } from '@mui/icons-material';
 import ReactTimeAgo from 'react-time-ago'
 import React, { useCallback, useEffect, useState } from 'react';
-import { actionUpdate } from "../service";
 import CommentTwoToneIcon from '@mui/icons-material/CommentTwoTone';
-import VoteButton from 'components/buttons/VoteButtons';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
-const ActionType = {
-    DISLIKE: 0,
-    LIKE: 1
-}
+
 const CardActionsWrapper = styled(CardActions)(
     ({ theme }) => `
        background: ${theme.colors.alpha.black[5]};
@@ -40,7 +35,7 @@ const CardActionsWrapper = styled(CardActions)(
 );
 
 
-function Post({ post, onMenu, userModel, viewPost }) {
+function Post({ post, viewPost }) {
     // console.log(post)
     const [paction, setPaction] = useState({
         up_vote: post.up_vote,
@@ -49,7 +44,7 @@ function Post({ post, onMenu, userModel, viewPost }) {
         review: post.review
     });
     const [anchorEl, setAnchorEl] = useState(null);
-  
+
     const open = Boolean(anchorEl);
     const handleOptionClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -60,13 +55,6 @@ function Post({ post, onMenu, userModel, viewPost }) {
     const handleOptionAction = (type) => {
         onMenu(post._id, type)
         setAnchorEl(null);
-    }
-    const updateAction = (type) => {
-        actionUpdate(post._id, type).then(e => {
-            if (e.flag) {
-                setPaction(e.data);
-            }
-        })
     }
 
     useEffect(() => {
@@ -107,14 +95,6 @@ function Post({ post, onMenu, userModel, viewPost }) {
                             {...srcset(item.img, 151, item.rows, item.cols)}
                             alt={item.title}
                             loading="lazy"
-                            // onClick={(e) => {
-                            //     openLightbox(e, {
-                            //         index,
-                            //         photo: photos[index],
-                            //         previous: photos[index - 1] || null,
-                            //         next: photos[index + 1] || null,
-                            //     })
-                            // }}
                         />
                     </ImageListItem>
                 ))}
@@ -126,30 +106,23 @@ function Post({ post, onMenu, userModel, viewPost }) {
             <Card>
                 <CardHeader
                     avatar={<Avatar src={post.user_dp} />}
-                    action={
-                        <>
-                            <IconButton
-                                color="primary"
-                                onClick={handleOptionClick}
-                            >
-                                <MoreHorizTwoToneIcon fontSize="medium" />
-                            </IconButton>
-                            <Menu
-                                anchorEl={anchorEl}
-                                open={open}
-                                onClose={handleOptionClose}
-                            >
-                                {post.userid === userModel._id ? (
-                                    [
-                                        <MenuItem key={'edit'} onClick={() => { handleOptionAction(1) }}>Edit</MenuItem>,
-                                        <MenuItem key={'delete'} onClick={() => { handleOptionAction(2) }}>Delete</MenuItem>
-                                    ]
-                                ) : (
-                                    <MenuItem onClick={() => { handleOptionAction(0) }}>Report</MenuItem>
-                                )}
-                            </Menu>
-                        </>
-                    }
+                    // action={
+                    //     <>
+                    //         <IconButton
+                    //             color="primary"
+                    //             onClick={handleOptionClick}
+                    //         >
+                    //             <MoreHorizTwoToneIcon fontSize="medium" />
+                    //         </IconButton>
+                    //         <Menu
+                    //             anchorEl={anchorEl}
+                    //             open={open}
+                    //             onClose={handleOptionClose}
+                    //         >
+                    //             <MenuItem onClick={() => { handleOptionAction(0) }}>Report</MenuItem>
+                    //         </Menu>
+                    //     </>
+                    // }
                     titleTypographyProps={{ variant: 'h4' }}
                     subheaderTypographyProps={{ variant: 'subtitle2' }}
                     title={post.username}
@@ -168,6 +141,10 @@ function Post({ post, onMenu, userModel, viewPost }) {
                 <Box p={1}>
                     <Typography variant="subtitle2">
                         <ReactTimeAgo date={new Date(post.create_at)} locale="en-US" />
+                        {' | '}Supporters{' : '}
+                        <Text>
+                            <b>{post.supporters}</b>
+                        </Text>
                     </Typography>
                 </Box>
                 <Divider />
@@ -179,8 +156,12 @@ function Post({ post, onMenu, userModel, viewPost }) {
                     }}
                 >
                     <Stack direction="row" spacing={2} justifyContent="space-between">
-                        <VoteButton onClick={updateAction} type={ActionType.LIKE} vote={paction.vtype} />
-                        <VoteButton onClick={updateAction} type={ActionType.DISLIKE} vote={paction.vtype} />
+                        <Button disabled startIcon={<ThumbUpAltTwoToneIcon />} variant={"outlined"}>
+                            Like
+                        </Button>
+                        <Button disabled startIcon={<ThumbDownOffAltTwoTone />} variant={"outlined"}>
+                            Dislike
+                        </Button>
                         <Button
                             startIcon={<CommentTwoToneIcon />}
                             variant="outlined"
@@ -191,7 +172,7 @@ function Post({ post, onMenu, userModel, viewPost }) {
                         >
                             Review
                         </Button>
-                        <Button startIcon={<ShareTwoToneIcon />} variant="outlined">
+                        <Button disabled startIcon={<ShareTwoToneIcon />} variant="outlined">
                             Share
                         </Button>
                     </Stack>

@@ -61,7 +61,8 @@ const UserBoxLabel = styled(Typography)(
 function HeaderUserbox() {
 
   const history = useHistory();
-  const user = tokenService.getUser();
+  // const user = tokenService.getUser();
+  const user={name:"krishna",img:null}
   const ref = useRef(null);
   const [isOpen, setOpen] = useState(false);
 

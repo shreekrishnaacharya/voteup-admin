@@ -16,7 +16,7 @@ import {
 
 import ThumbUpAltTwoToneIcon from '@mui/icons-material/ThumbUpAltTwoTone';
 import Text from 'components/Text';
-import { Delete, Info, ThumbDownAltTwoTone } from '@mui/icons-material';
+import { Delete, Info, ThumbDownAltTwoTone, ThumbUpAltTwoTone } from '@mui/icons-material';
 import ReactTimeAgo from 'react-time-ago'
 import React, { useState } from 'react';
 import { actionUpdate } from "../service";
@@ -33,57 +33,42 @@ const CardActionsWrapper = styled(CardActions)(
   `
 );
 
-
-function Comment({ comment, setReport, setConfirm, userModel }) {
+function Comment({ comment }) {
     const [paction, setPaction] = useState({
         up_vote: comment.up_vote,
         down_vote: comment.down_vote,
         vtype: comment.vtype
     });
-    const handleOptionAction = (type) => {
-        if (type == 0) {
-            setReport({ postid: comment._id, open: true })
-        } else if (type == 2) {
-            setConfirm({ postid: comment._id, open: true })
-        }
-    }
-    const updateAction = (type) => {
-        actionUpdate(comment._id, type).then(e => {
-            if (e.flag) {
-                setPaction(e.data);
-            }
-        })
-    }
 
     return (
         <Box mb={1}>
             <Card>
                 <CardHeader
                     avatar={<Avatar src={comment.user_dp} />}
-                    action={
-                        <>
-                            {comment.userid === userModel._id ? (
-                                <IconButton
-                                    color="error"
-                                    onClick={() => {
-                                        handleOptionAction(2)
-                                    }}
-                                >
-                                    <Delete fontSize="medium" />
-                                </IconButton>
-                            ) : (
-                                <IconButton
-                                    color="info"
-                                    onClick={() => {
-                                        handleOptionAction(i)
-                                    }}
-                                >
-                                    <Info fontSize="medium" />
-                                </IconButton>
-                            )}
+                    // action={
+                    //     <>
+                    //         {comment.userid === userModel._id ? (
+                    //             <IconButton
+                    //                 color="error"
+                    //                 onClick={() => {
+                    //                     handleOptionAction(2)
+                    //                 }}
+                    //             >
+                    //                 <Delete fontSize="medium" />
+                    //             </IconButton>
+                    //         ) : (
+                    //             <IconButton
+                    //                 color="info"
+                    //                 onClick={() => {
+                    //                     handleOptionAction(i)
+                    //                 }}
+                    //             >
+                    //                 <Info fontSize="medium" />
+                    //             </IconButton>
+                    //         )}
 
-                        </>
-                    }
+                    //     </>
+                    // }
                     titleTypographyProps={{ variant: 'h5' }}
                     subheaderTypographyProps={{ variant: 'subtitle2' }}
                     title={comment.username}
@@ -106,8 +91,12 @@ function Comment({ comment, setReport, setConfirm, userModel }) {
                     }}
                 >
                     <Stack direction="row" spacing={1} justifyContent="space-between">
-                        <VoteButton size='small' onClick={updateAction} type={ActionType.LIKE} vote={paction.vtype} />
-                        <VoteButton size='small' onClick={updateAction} type={ActionType.DISLIKE} vote={paction.vtype} />
+                        <Button disabled size='small' startIcon={<ThumbUpAltTwoTone />} variant={"outlined"}>
+                            Like
+                        </Button>
+                        <Button disabled size='small' startIcon={<ThumbDownAltTwoTone />} variant={"outlined"}>
+                            Dislike
+                        </Button>
                     </Stack>
                     <Box sx={{ mt: { xs: 1, md: 0 } }}>
                         <Typography variant="subtitle2" component="span">

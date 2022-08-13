@@ -5,17 +5,15 @@ import { useHistory } from "react-router-dom";
 import { Box, Card, Typography } from "@mui/material";
 // Soft UI Dashboard React example components
 import { Table } from "components/Table";
-import { voterPages } from "links";
+import { reportPages } from "links";
 
 import { columns, modelList, modelListInit, modelListEmpty, modelPages } from "../model/list";
-import { getVoterList } from "../service";
+import { getReports } from "../service";
 import { useState } from "react";
 
-
-
-function VotersList() {
-    const [voterList, setVoter] = useState({
-        voters: null,
+function ReportsList() {
+    const [reportList, setReports] = useState({
+        reports: null,
         pg: {
             size: 0,
             pages: 0,
@@ -25,10 +23,10 @@ function VotersList() {
     })
     // const classes = styles();
     const history = useHistory();
-    const handleView = (id, name) => {
+    const handleView = (id) => {
         history.push({
-            pathname: voterPages.VOTER_VIEW,
-            search: `?id=${id}&name=${name.replace(" ", "-").toLowerCase()}`,
+            pathname: reportPages.REPORT_VIEW,
+            search: "?id=" + id,
             state: {
                 id,
                 name
@@ -36,17 +34,17 @@ function VotersList() {
         });
     }
     const handleClick = (e, current) => {
-        if (voterList.pg.current !== current) {
+        if (reportList.pg.current !== current) {
             loadData(current);
         }
     }
 
     async function loadData(page) {
-        await getVoterList({ page }).then((res) => {
+        await getReports({ page }).then((res) => {
             if (res.flag) {
                 if (Object.keys(res.data).length) {
-                    setVoter({
-                        voters: res.data,
+                    setReports({
+                        reports: res.data,
                         pg: {
                             size: parseInt(res.headers["x-pagination-per-page"]),
                             pages: parseInt(res.headers["x-pagination-page-count"]),
@@ -68,13 +66,13 @@ function VotersList() {
 
     const TableRender = () => {
 
-        if (voterList.voters === null) {
+        if (reportList.reports === null) {
             return (
                 <div>
                     <Table columns={columns} rows={modelListInit()} />
                 </div>
             );
-        } else if (voterList.voters == 0) {
+        } else if (reportList.reports == 0) {
             return (
                 <div>
                     <Table columns={columns} rows={modelListEmpty()} />
@@ -83,9 +81,9 @@ function VotersList() {
         } else {
             return (
                 <div>
-                    <Table columns={columns} rows={modelList(voterList.voters, handleView)} />
+                    <Table pagination={reportList.pg} columns={columns} rows={modelList(reportList.reports, handleView)} />
                     <Box mt={1} mb={2} style={{ float: "right" }}>
-                        {modelPages(voterList.pg, handleClick)}
+                        {modelPages(reportList.pg, handleClick)}
                     </Box>
                 </div>
             );
@@ -97,7 +95,7 @@ function VotersList() {
             <Box mb={3}>
                 <Card>
                     <Box display="flex" justifyContent="space-between" alignItems="center" p={3}>
-                        <Typography variant="h3">{"Voters"}</Typography>
+                        <Typography variant="h3">{"Reports"}</Typography>
                     </Box>
                     <Box>
                         <TableRender />
@@ -108,4 +106,4 @@ function VotersList() {
     );
 }
 
-export default VotersList;
+export default ReportsList;
