@@ -2,6 +2,7 @@ import SidebarLayout from 'layouts/SidebarLayout';
 import { pages } from 'links';
 import { Route } from 'react-router-dom';
 import Status404 from 'view/pages/Status404';
+import DashboardController from './dashboard';
 import FeedController from './feed';
 import ViewPost from './post/view/ViewPost';
 import ReportController from './report/';
@@ -17,6 +18,7 @@ function MainController() {
                 <Route path={pages.FEEDS} component={FeedController} />
                 <Route path={pages.POST} component={ViewPost} />
                 <Route path={pages.SETTING} component={SettingController} />
+                <Route path={pages.HOME} component={DashboardController} />
                 {/* <Route path={"/"} component={Status404} /> */}
             </SidebarLayout>
         </div>

@@ -7,7 +7,7 @@ import { voterListReducer } from "./voterReducer";
 // import { contactDetailReducer, contactListReducer } from "./contactReducer";
 // import { navPathReducer } from "./navPathReducer";
 import { alertReducer } from "./alertReducer";
-// import { dboardReducer } from "./dboardReducer";
+import { dboardReducer } from "./dboardReducer";
 
 const reducers = combineReducers({
     user: userReducer,
@@ -20,7 +20,7 @@ const reducers = combineReducers({
     // contactDetail: contactDetailReducer,
     // navPath: navPathReducer,
     alert: alertReducer,
-    // dboard: dboardReducer
+    dboard: dboardReducer
 });
 
 export default reducers;

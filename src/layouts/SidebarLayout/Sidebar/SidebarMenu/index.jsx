@@ -191,6 +191,16 @@ function SidebarMenu() {
                 <Button
                   disableRipple
                   component={RouterLink}
+                  to={pages.HOME}
+                  startIcon={<DesignServicesTwoToneIcon />}
+                >
+                  Dashboard
+                </Button>
+              </ListItem>
+              <ListItem component="div">
+                <Button
+                  disableRipple
+                  component={RouterLink}
                   to={pages.FEEDS}
                   startIcon={<HowToVoteTwoToneIcon />}
                 >
