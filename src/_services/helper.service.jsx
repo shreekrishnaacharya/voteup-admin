@@ -10,6 +10,10 @@ const toBase64 = file => new Promise((resolve, reject) => {
 
 });
 
+const getDateString = (date) => {
+    return new Date(date).toDateString()
+}
+
 const getUpdateKey = (jsData, keys) => {
     for (const ky in keys) {
         if (jsData.hasOwnProperty(ky)) {
@@ -105,5 +109,6 @@ export {
     toBase64,
     getJsonForm,
     getJsonForms,
-    getUpdateKey
+    getUpdateKey,
+    getDateString
 }

@@ -47,7 +47,7 @@ const SidebarLayout = ({ children }) => {
             }
           }}
         >
-          <Box mx={2} display="block">
+          <Box mt={3} mx={2} display="block">
             {children}
           </Box>
         </Box>

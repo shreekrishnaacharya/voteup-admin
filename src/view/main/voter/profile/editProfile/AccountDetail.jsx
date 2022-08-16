@@ -11,6 +11,7 @@ import Label from 'components/Label';
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 import Text from 'components/Text';
 import React from "react";
+import { getDateString } from '_services'
 
 export default function AccountDetail({ userProfile }) {
     return (
@@ -89,6 +90,14 @@ export default function AccountDetail({ userProfile }) {
                                     <b>&nbsp;{userProfile.status}</b>
                                 </Label>
                             )}
+                        </Grid>
+                        <Grid item xs={12} sm={4} md={3} textAlign={{ sm: 'right' }}>
+                            <Box pr={3} pb={2}>
+                                Created On:
+                            </Box>
+                        </Grid>
+                        <Grid item xs={12} sm={8} md={9}>
+                            <b>&nbsp;{getDateString(userProfile.create_at)}</b>
                         </Grid>
                     </Grid>
                 </Typography>

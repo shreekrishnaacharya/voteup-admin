@@ -45,7 +45,6 @@ function ManagementUserProfile() {
         direction="row"
         justifyContent="center"
         alignItems="stretch"
-        my={1}
         spacing={3}
       >
         <Grid item xs={12}>

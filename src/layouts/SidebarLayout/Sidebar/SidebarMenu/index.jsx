@@ -218,6 +218,16 @@ function SidebarMenu() {
                   Reports
                 </Button>
               </ListItem>
+              <ListItem component="div">
+                <Button
+                  disableRipple
+                  component={RouterLink}
+                  to={pages.SETTING}
+                  startIcon={<SettingsTwoToneIcon />}
+                >
+                  Setting
+                </Button>
+              </ListItem>
             </List>
           </SubMenuWrapper>
         </List>

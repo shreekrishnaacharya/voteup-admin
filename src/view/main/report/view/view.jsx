@@ -94,7 +94,7 @@ function ReportView() {
     }
     return (
         <>
-            <Box my={3} >
+            <Box mb={3} >
                 <Card>
                     <Box display="flex" justifyContent="space-between" alignItems="center" p={2}>
                         <Typography variant="h3">{"Report View"}</Typography>

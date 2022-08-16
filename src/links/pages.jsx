@@ -19,6 +19,10 @@ const postPages = {
     POST: "/post",
 }
 
+const settingPages = {
+    SETTING: "/setting",
+}
+
 const sitePage = {
     LOGIN: "/guest",
     NEW_PASSWORD: "/guest/new-password",
@@ -38,7 +42,8 @@ const pages = {
     ...voterPages,
     ...reportPages,
     ...feedPages,
-    ...postPages
+    ...postPages,
+    ...settingPages
 };
 
 const guestPage = [
@@ -54,4 +59,4 @@ const getFullUrl = (page) => {
     return pages.LOCAL_URL + "#" + page;
 }
 
-export { pages, sitePage, reportPages, voterPages, feedPages, postPages, guestPage, getFullUrl };
+export { pages, sitePage, reportPages, voterPages, feedPages, postPages, settingPages, guestPage, getFullUrl };

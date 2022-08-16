@@ -91,18 +91,14 @@ function ReportsList() {
     }
 
     return (
-        <Box py={3}>
-            <Box mb={3}>
-                <Card>
-                    <Box display="flex" justifyContent="space-between" alignItems="center" p={3}>
-                        <Typography variant="h3">{"Reports"}</Typography>
-                    </Box>
-                    <Box>
-                        <TableRender />
-                    </Box>
-                </Card>
+        <Card>
+            <Box display="flex" justifyContent="space-between" alignItems="center" p={3}>
+                <Typography variant="h3">{"Reports"}</Typography>
             </Box>
-        </Box>
+            <Box>
+                <TableRender />
+            </Box>
+        </Card>
     );
 }
 

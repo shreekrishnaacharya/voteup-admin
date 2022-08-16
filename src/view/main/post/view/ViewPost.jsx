@@ -43,7 +43,7 @@ const ViewPost = () => {
     }, []);
 
     return (
-        <Box sx={{ margin: '20px' }}>
+        <Box>
             {loading ? (
                 <>
                     <PostLoad />
