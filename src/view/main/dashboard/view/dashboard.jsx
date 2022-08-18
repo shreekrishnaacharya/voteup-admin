@@ -1,32 +1,32 @@
 import { useEffect } from "react";
-import Grid from "@mui/material/Grid";
+import { Grid, Box, Skeleton } from "@mui/material";
 
 import MiniStatisticsCard from "components/charts/MiniStatisticsCard";
-import ReportsBarChart from "components/charts/BarCharts/ReportsBarChart";
-import GradientLineChart from "components/charts/LineCharts/GradientLineChart";
-import PieChart from "components/charts/PieChart";
+// import ReportsBarChart from "components/charts/BarCharts/ReportsBarChart";
+// import GradientLineChart from "components/charts/LineCharts/GradientLineChart";
+// import PieChart from "components/charts/PieChart";
 
 import { getLineChart, getBarChart, getMiniCard } from "../model/list";
 import { getDashboard } from "../service";
 import { useDispatch, useSelector } from "react-redux";
 import { setDashboard } from "redux/action/dboardAction";
-import Loader from "components/Loader";
 
 function Dashboard() {
   const dboardData = useSelector(state => state.dboard);
   const dispatch = useDispatch();
   async function loadData() {
     await getDashboard().then((res) => {
+      console.log(res)
       if (res.flag) {
         console.log(res.data);
         if (Object.keys(res.data).length) {
           dispatch(setDashboard({
             minicard: res.data.minicard,
-            line: getLineChart(res.data.bar),
-            bar: getBarChart(res.data.bar[0]),
-            ...getMiniCard(res.data)
+            // line: getLineChart(res.data.bar),
+            // bar: getBarChart(res.data.bar[0]),
           }));
         } else {
+          console.log("no length")
           dispatch(setDashboard({}));
         }
       }
@@ -37,54 +37,75 @@ function Dashboard() {
     loadData();
   }, []);
 
-  if (dboardData === null || Object.keys(dboardData).length == 0) {
-    return (<Loader />);
-  }
-
-  const minicard = dboardData.minicard;
-  console.log(dboardData);
+  const { minicard } = dboardData;
   return (
-    <SuiBox py={3}>
-      <SuiBox mb={3}>
+    <Box py={3}>
+      <Box mb={3}>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={6} xl={3}>
-            <MiniStatisticsCard
-              title={{ text: "Sales" }}
-              count={minicard.sales}
-              percentage={{ color: dboardData.sales_pay < 0 ? "error" : "success", text: dboardData.sales_pay }}
-              icon={{ color: "info", component: "paid" }}
-            />
+          <Grid item xs={12} sm={2}>
+            {minicard == null ? (
+              <Skeleton height={100} />
+            ) : (
+              <MiniStatisticsCard
+                title={{ text: "Users" }}
+                count={minicard.users.new}
+                percentage={{ color: "success", text: minicard.users.total }}
+                icon={{ color: "primary", component: "people" }}
+              />
+            )}
+
           </Grid>
-          <Grid item xs={12} sm={6} xl={3}>
-            <MiniStatisticsCard
-              title={{ text: "Purchase" }}
-              count={minicard.purchase}
-              percentage={{ color: dboardData.purchase_pay < 0 ? "error" : "success", text: dboardData.purchase_pay }}
-              icon={{ color: "info", component: "public" }}
-            />
+          <Grid item xs={12} sm={2}>
+            {minicard == null ? (
+              <Skeleton height={100} />
+            ) : (
+              <MiniStatisticsCard
+                title={{ text: "Post" }}
+                count={minicard.post.new}
+                percentage={{ color: "success", text: minicard.post.total }}
+                icon={{ color: "info", component: "public" }}
+              />
+            )}
           </Grid>
-          <Grid item xs={12} sm={6} xl={3}>
-            <MiniStatisticsCard
-              title={{ text: "Customers" }}
-              count={minicard.customers}
-              // percentage={{ color: "success", text: "+5%" }}
-              icon={{ color: "info", component: "emoji_events" }}
-            />
+          <Grid item xs={12} sm={2}>
+            {minicard == null ? (
+              <Skeleton height={100} />
+            ) : (
+              <MiniStatisticsCard
+                title={{ text: "Reivew" }}
+                count={minicard.comments.new}
+                percentage={{ color: "success", text: minicard.comments.total }}
+                icon={{ color: "warning", component: "comment" }}
+              />
+            )}
           </Grid>
-          <Grid item xs={12} sm={6} xl={3}>
-            <MiniStatisticsCard
-              title={{ text: "Vendors" }}
-              count={minicard.vendors}
-              // percentage={{ color: "success", text: "+5%" }}
-              icon={{
-                color: "info",
-                component: "shopping_cart",
-              }}
-            />
+          <Grid item xs={12} sm={2}>
+            {minicard == null ? (
+              <Skeleton height={100} />
+            ) : (
+              <MiniStatisticsCard
+                title={{ text: "Votes" }}
+                count={minicard.vote.new}
+                percentage={{ color: "success", text: minicard.vote.total }}
+                icon={{ color: "success", component: "thumbs_up_down" }}
+              />
+            )}
+          </Grid>
+          <Grid item xs={12} sm={2}>
+            {minicard == null ? (
+              <Skeleton height={100} />
+            ) : (
+              <MiniStatisticsCard
+                title={{ text: "Report" }}
+                count={minicard.report.new}
+                percentage={{ color: "success", text: minicard.report.total }}
+                icon={{ color: "error", component: "poll" }}
+              />
+            )}
           </Grid>
         </Grid>
-      </SuiBox>
-      <SuiBox mb={3}>
+      </Box>
+      {/* <Box mb={3}>
         <Grid container spacing={3}>
           <Grid item xs={12} lg={8}>
             <GradientLineChart
@@ -114,8 +135,8 @@ function Dashboard() {
             />
           </Grid>
         </Grid>
-      </SuiBox>
-    </SuiBox>
+      </Box> */}
+    </Box>
   );
 }
 

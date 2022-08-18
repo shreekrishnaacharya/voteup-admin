@@ -11,7 +11,6 @@ function StoreController() {
         <Switch>
             <Route path={pages.GUEST} component={SiteController} />
             <Route path={"/"} component={MainController} />
-            
         </Switch>
     );
 }

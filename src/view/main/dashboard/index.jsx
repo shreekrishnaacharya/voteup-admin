@@ -1,3 +1,3 @@
-import * as DashboardController from "./view/dashboard";
+import Das from "./view/dashboard";
 
-export default DashboardController;
+export default Das;

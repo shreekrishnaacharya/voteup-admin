@@ -1,5 +1,5 @@
 import { ActionTypes } from "../contants/action-types"
-const initList = null;
+const initList = {};
 
 export const dboardReducer = (state = initList, { type, payload }) => {
     switch (type) {

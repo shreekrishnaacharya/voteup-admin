@@ -50,10 +50,7 @@ const getLineChart = (dataList) => {
 const getMiniCard = (dataL) => {
 
   let labels = [], data = [];
-  dataL.sales.forEach((da, i) => {
-    labels[i] = stat[da.sts].batch;
-    data[i] = da.amt;
-  });
+
 
   const salesPie = {
     labels,
@@ -66,9 +63,6 @@ const getMiniCard = (dataL) => {
         "secondary",
         "success",
         "warning"
-        // 'rgb(255, 99, 132)',
-        // 'rgb(54, 162, 235)',
-        // 'rgb(255, 205, 86)'
       ],
     }
   };

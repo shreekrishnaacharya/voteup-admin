@@ -221,7 +221,8 @@ export const PureLightTheme = createTheme({
       light: lighten(themeColors.info, 0.3),
       main: themeColors.info,
       dark: darken(themeColors.info, 0.2)
-    }
+    },
+    ...themeColors
   },
   general: {
     reactFrameworkColor: '#00D8FF',
