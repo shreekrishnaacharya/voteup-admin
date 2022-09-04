@@ -24,17 +24,6 @@ const stat = {
     "color": "primary"
   }
 };
-function Pimg({ image, name, code }) {
-  return (
-    <Box display="flex"
-      alignItems="center"
-      px={2}
-      py={0.5}
-    >
-      <Avatar src={image} alt={name} size="sm" variant="rounded" />
-    </Box>
-  );
-}
 
 function Text({ text, edge, warpLength }) {
   return (
@@ -52,20 +41,6 @@ function Text({ text, edge, warpLength }) {
   );
 }
 
-function Name({ name, code }) {
-  return (
-    <Box display="flex"
-      flexDirection="column"
-    >
-      <Typography variant="button" fontWeight="medium">
-        {name}
-      </Typography>
-      <Typography variant="caption">
-        {code}
-      </Typography>
-    </Box>
-  );
-}
 
 
 function Status({ status }) {
@@ -77,7 +52,7 @@ function Status({ status }) {
 
 function Type({ type }) {
   return (
-    <Badge variant="gradient" badgeContent={type} color={type == "POST" ? "primary" : "secondary"} size="extra-small"/>
+    <Badge variant="gradient" badgeContent={type} color={type == "POST" ? "primary" : "secondary"} size="extra-small" />
   );
 }
 const modelList = (list, handleView) => {
@@ -153,22 +128,19 @@ const modelPages = (pagination, handleNav) => {
 const modelListInit = () => {
   return [
     {
-      image: <Skeleton animation="wave" style={{ margin: "5px 10px" }} variant="circular" width={40} height={40} />,
-      name: [
+      user: [
         { "colSpan": "6" },
         <Skeleton animation="wave" variant="text" width="80%" height={30} />
       ],
     },
     {
-      image: <Skeleton animation="wave" style={{ margin: "5px 10px" }} variant="circular" width={40} height={40} />,
-      name: [
+      user: [
         { "colSpan": "6" },
         <Skeleton animation="wave" variant="text" width="70%" height={30} />
       ],
     },
     {
-      image: <Skeleton animation="wave" style={{ margin: "5px 10px" }} variant="circular" width={40} height={40} />,
-      name: [
+      user: [
         { "colSpan": "6" },
         <Skeleton animation="wave" variant="text" width="90%" height={30} />
       ],

@@ -6,7 +6,6 @@ import { Grid, Card, Icon, Box, Typography, useTheme } from "@mui/material";
 
 function MiniStatisticsCard({ backgroundColor, title, count, percentage, icon, direction }) {
   const theme = useTheme();
-  console.log(theme)
   const boxColor = backgroundColor === "white" ? theme.colors[icon.color] : theme.colors[backgroundColor]
   const backgroundGradient = theme.colors.gradients.blue5
   return (
@@ -115,12 +114,14 @@ MiniStatisticsCard.defaultProps = {
 // Typechecking props for the MiniStatisticsCard
 MiniStatisticsCard.propTypes = {
   backgroundColor: PropTypes.oneOf([
+    "white",
     "primary",
     "secondary",
     "info",
     "success",
     "warning",
     "error",
+    "dark"
   ]),
   title: PropTypes.PropTypes.shape({
     fontWeight: PropTypes.oneOf(["light", "regular", "medium", "bold"]),

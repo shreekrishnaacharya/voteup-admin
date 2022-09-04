@@ -25,6 +25,18 @@ async function getDashboard() {
     });
 }
 
+
+async function getFeeds() {
+    return await getApiRequest({
+        url: "/feeds",
+        data: {
+            size: 5
+        }
+    }).then((result) => {
+        return result;
+    });
+}
 export {
-    getDashboard
+    getDashboard,
+    getFeeds
 };

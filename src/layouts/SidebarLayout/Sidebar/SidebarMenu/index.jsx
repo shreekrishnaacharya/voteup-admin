@@ -158,7 +158,6 @@ const SubMenuWrapper = styled(Box)(
 
               &.active,
               &:hover {
-
                 &:before {
                   transform: scale(1);
                   opacity: 1;
@@ -191,6 +190,7 @@ function SidebarMenu() {
                 <Button
                   disableRipple
                   component={RouterLink}
+                  exact
                   to={pages.HOME}
                   startIcon={<DesignServicesTwoToneIcon />}
                 >

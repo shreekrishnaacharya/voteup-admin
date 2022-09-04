@@ -22,22 +22,17 @@ import PropTypes from "prop-types";
 import { Line } from "react-chartjs-2";
 
 // @mui material components
-import Card from "@mui/material/Card";
-
-// Soft UI Dashboard React components
-import SuiBox from "components/SuiBox";
-import SuiTypography from "components/SuiTypography";
-
-// Soft UI Dashboard React helper functions
-import gradientChartLine from "assets/theme/functions/gradientChartLine";
+import { Card, Box, Typography } from "@mui/material";
 
 // GradientLineChart configurations
 import configs from "./configs";
 
 // Soft UI Dashboard React base styles
-import colors from "assets/theme/base/colors";
+import { useTheme } from "@emotion/react";
 
 function GradientLineChart({ title, description, height, chart }) {
+  
+  const { colors } = useTheme();
   const chartRef = useRef(null);
   const [chartData, setChartData] = useState({});
   const { data, options } = chartData;
@@ -48,29 +43,28 @@ function GradientLineChart({ title, description, height, chart }) {
       tension: 0.4,
       pointRadius: 0,
       borderWidth: 3,
-      borderColor: colors[dataset.color].main,
+      borderColor: colors[dataset.color],
       fill: true,
       maxBarThickness: 6,
       // backgroundColor: gradientChartLine(chartRef.current.children[0], colors[dataset.color].main),
     }));
     setChartData(configs(chart.labels, chartDatasets));
-    console.log(chartData);
   }, []);
   const renderChart = (
-    <SuiBox p={2}>
+    <Box p={2}>
       {title || description ? (
-        <SuiBox px={description ? 1 : 0} pt={description ? 1 : 0}>
+        <Box px={description ? 1 : 0} pt={description ? 1 : 0}>
           {title && (
-            <SuiBox mb={1}>
-              <SuiTypography variant="h6">{title}</SuiTypography>
-            </SuiBox>
+            <Box mb={1}>
+              <Typography variant="h6">{title}</Typography>
+            </Box>
           )}
-          <SuiBox mb={2}>
-            <SuiTypography variant="button" fontWeight="regular" textColor="text">
+          <Box mb={2}>
+            <Typography variant="button" fontWeight="regular" textColor="text">
               {description}
-            </SuiTypography>
-          </SuiBox>
-        </SuiBox>
+            </Typography>
+          </Box>
+        </Box>
       ) : null}
       {useMemo(
         () => (
@@ -82,7 +76,7 @@ function GradientLineChart({ title, description, height, chart }) {
         ),
         [chartData, height]
       )}
-    </SuiBox>
+    </Box>
   );
 
   return title || description ? <Card>{renderChart}</Card> : renderChart;

@@ -1,5 +1,6 @@
+import PropTypes from 'prop-types';
 import { Card, CardHeader, Skeleton, CardContent, styled, Box, Divider, CardActions, Stack, Button } from "@mui/material";
-import { ThumbDownAltTwoTone, CommentTwoTone, ShareTwoTone, ThumbUpAltTwoTone } from '@mui/icons-material';
+import { CommentTwoTone, ShareTwoTone, ThumbUpAltTwoTone } from '@mui/icons-material';
 
 const CardActionsWrapper = styled(CardActions)(
     ({ theme }) => `
@@ -7,7 +8,7 @@ const CardActionsWrapper = styled(CardActions)(
        padding: ${theme.spacing(3)};
   `
 );
-export default function PostLoad() {
+function PostLoad({ isOpen }) {
     return <Box mb={2}>
         <Card>
             <CardHeader
@@ -40,15 +41,15 @@ export default function PostLoad() {
                 }}
             >
                 <Stack direction="row" spacing={2} justifyContent="space-between">
-                    <Button disabled startIcon={<ThumbUpAltTwoTone />} variant={"outlined"}>
-                        Like
-                    </Button>
-                    <Button disabled startIcon={<ThumbDownAltTwoTone />} variant={"outlined"}>
-                        Dislike
-                    </Button>
-                    <Button disabled startIcon={<CommentTwoTone />} variant="outlined">
-                        Review
-                    </Button>
+                    {isOpen ? (
+                        <Button disabled startIcon={<ThumbUpAltTwoTone />} variant={"outlined"}>
+                            Vote
+                        </Button>
+                    ) : (
+                        <Button disabled startIcon={<CommentTwoTone />} variant="outlined">
+                            Review
+                        </Button>
+                    )}
                     <Button disabled startIcon={<ShareTwoTone />} variant="outlined">
                         Share
                     </Button>
@@ -57,3 +58,9 @@ export default function PostLoad() {
         </Card>
     </Box>
 }
+
+PostLoad.defaultProps = {
+    isOpen: false,
+}
+
+export default PostLoad;

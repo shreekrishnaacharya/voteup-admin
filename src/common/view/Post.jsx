@@ -6,24 +6,25 @@ import {
     CardContent,
     Divider,
     Avatar,
-    IconButton,
     Button,
     CardActions,
     Link,
     styled,
-    Stack,
-    Menu,
-    MenuItem
 } from '@mui/material';
 
-import MoreHorizTwoToneIcon from '@mui/icons-material/MoreHorizTwoTone';
-import ThumbUpAltTwoToneIcon from '@mui/icons-material/ThumbUpAltTwoTone';
-import ShareTwoToneIcon from '@mui/icons-material/ShareTwoTone';
 import Text from 'components/Text';
-import { ThumbDownOffAltTwoTone } from '@mui/icons-material';
 import ReactTimeAgo from 'react-time-ago'
-import React, { useCallback, useEffect, useState } from 'react';
-import CommentTwoToneIcon from '@mui/icons-material/CommentTwoTone';
+import React, { useState } from 'react';
+// import ImageList from '@mui/material/ImageList';
+// import ImageListItem from '@mui/material/ImageListItem';
+import Ranking from 'components/Ranking';
+import HowToVoteIcon from '@mui/icons-material/HowToVote';
+import InsertCommentIcon from '@mui/icons-material/InsertComment';
+import ErrorIcon from '@mui/icons-material/Error';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
+import PollIcon from '@mui/icons-material/Poll';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 
@@ -33,34 +34,15 @@ const CardActionsWrapper = styled(CardActions)(
        padding: ${theme.spacing(3)};
   `
 );
+const statusList = {
+    0: { color: 'info', icon: <InsertCommentIcon sx={{ mr: 1 }} /> },
+    1: { color: 'primary', icon: <HowToVoteIcon sx={{ mr: 1 }} /> },
+    2: { color: 'success', icon: <CheckCircleIcon sx={{ mr: 1 }} /> },
+    3: { color: 'error', icon: <ErrorIcon sx={{ mr: 1 }} /> },
+}
 
-
-function Post({ post, viewPost }) {
+function Post({ post, userModel, isOpen }) {
     // console.log(post)
-    const [paction, setPaction] = useState({
-        up_vote: post.up_vote,
-        down_vote: post.down_vote,
-        vtype: post.vtype,
-        review: post.review
-    });
-    const [anchorEl, setAnchorEl] = useState(null);
-
-    const open = Boolean(anchorEl);
-    const handleOptionClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-    const handleOptionClose = () => {
-        setAnchorEl(null);
-    };
-    const handleOptionAction = (type) => {
-        onMenu(post._id, type)
-        setAnchorEl(null);
-    }
-
-    useEffect(() => {
-        setPaction(post);
-    }, [post]);
-
 
     let tagsList = [];
     if (post.tags !== null) {
@@ -155,43 +137,61 @@ function Post({ post, viewPost }) {
                         justifyContent: 'space-between'
                     }}
                 >
-                    <Stack direction="row" spacing={2} justifyContent="space-between">
-                        <Button disabled startIcon={<ThumbUpAltTwoToneIcon />} variant={"outlined"}>
-                            Like
-                        </Button>
-                        <Button disabled startIcon={<ThumbDownOffAltTwoTone />} variant={"outlined"}>
-                            Dislike
-                        </Button>
-                        <Button
-                            startIcon={<CommentTwoToneIcon />}
-                            variant="outlined"
-                            sx={{ mx: 2 }}
-                            onClick={() => {
-                                viewPost(post._id)
-                            }}
-                        >
-                            Review
-                        </Button>
-                        <Button disabled startIcon={<ShareTwoToneIcon />} variant="outlined">
-                            Share
-                        </Button>
-                    </Stack>
-                    <Box sx={{ mt: { xs: 2, md: 0 } }}>
-                        <Typography variant="subtitle2" component="span">
-                            <Text color="info">
-                                <b>{paction.review}</b>
-                            </Text>{' '}
-                            Review{' | '}
-                            <Text color="success">
-                                <b>{paction.up_vote}</b>
-                            </Text>{' '}
-                            Likes{' | '}
-                            <Text color="error">
-                                <b>{paction.down_vote}</b>
-                            </Text>{' '}
-                            Dislike
-                        </Typography>
-                    </Box>
+                    <Grid
+                        container
+                        direction={'row'}
+                        spacing={1}
+                        justifyContent="space-between"
+                        alignItems="center"
+                    >
+                        <Grid item xl={6} >
+                            <Grid container direction={'row'} spacing={1}>
+                                {isOpen ? (
+                                    <Button disabled startIcon={<ThumbUpAltTwoTone />} variant={"outlined"}>
+                                        Vote
+                                    </Button>
+                                ) : (
+                                    <Button disabled startIcon={<CommentTwoTone />} variant="outlined">
+                                        Review
+                                    </Button>
+                                )}
+                            </Grid>
+                        </Grid>
+                        <Grid item xl={6} >
+                            <div style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                flexWrap: 'wrap',
+                            }}>
+                                <Text
+                                    sx={{ display: 'flex', mr: 1 }}
+                                    color={statusList[post.statusCode].color}
+                                >
+                                    {statusList[post.statusCode].icon}{post.status}
+                                </Text>{'|'}
+                                <Text
+                                    sx={{ display: 'flex', mx: 1 }}
+                                >
+                                    <QuestionAnswerIcon sx={{ mr: 1 }} />{post.review}
+                                </Text>
+                                {post.statusCode > 0 && (
+                                    <>{'|'}
+                                        <Text
+                                            sx={{ display: 'flex', mx: 1 }}
+                                        >
+                                            <PollIcon sx={{ mr: 1 }} />{post.tot_votes}
+                                        </Text>{'|'}
+                                        <Text
+                                            sx={{ display: 'flex', mx: 1 }}
+                                        >
+                                            <ThumbUpIcon sx={{ mr: 1 }} />{post.votes}
+                                        </Text>{'|'}
+                                        <Ranking voters={post.tot_votes} votes={post.votes} />
+                                    </>
+                                )}
+                            </div>
+                        </Grid>
+                    </Grid>
                 </CardActionsWrapper>
             </Card>
         </Box >

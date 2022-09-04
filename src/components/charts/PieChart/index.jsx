@@ -22,11 +22,7 @@ import PropTypes from "prop-types";
 import { Pie } from "react-chartjs-2";
 
 // @mui material components
-import Card from "@mui/material/Card";
-
-// Soft UI Dashboard React components
-import SuiBox from "components/SuiBox";
-import SuiTypography from "components/SuiTypography";
+import { Card, Box, Typography } from "@mui/material";
 
 // PieChart configurations
 import configs from "./configs";
@@ -38,33 +34,33 @@ function PieChart({ title, description, height, chart }) {
   const { data, options } = configs(chart.labels, chart.datasets);
 
   const renderChart = (
-    <SuiBox p={2}>
+    <Box p={2}>
       {title || description ? (
-        <SuiBox px={description ? 1 : 0} pt={description ? 1 : 0}>
+        <Box px={description ? 1 : 0} pt={description ? 1 : 0}>
           {title && (
-            <SuiBox mb={1}>
-              <SuiTypography variant="h6">{title}</SuiTypography>
-            </SuiBox>
+            <Box mb={1}>
+              <Typography variant="h6">{title}</Typography>
+            </Box>
           )}
-          <SuiBox mb={2}>
-            <SuiTypography variant="button" fontWeight="regular" textColor="text">
+          <Box mb={2}>
+            <Typography variant="button" fontWeight="regular" textColor="text">
               {description}
-            </SuiTypography>
-          </SuiBox>
-        </SuiBox>
+            </Typography>
+          </Box>
+        </Box>
       ) : null}
       {useMemo(
         () => {
           return (
-            <SuiBox height={height}>
+            <Box height={height}>
               <Pie data={data} />
-            </SuiBox>
+            </Box>
           )
         },
         [data, height]
       )
       }
-    </SuiBox>
+    </Box>
   );
 
   return title || description ? <Card>{renderChart}</Card> : renderChart;

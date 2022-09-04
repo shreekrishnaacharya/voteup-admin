@@ -39,6 +39,7 @@
     "sweetalert2": "^11.1.10",
     "sweetalert2-react-content": "^4.2.0",
     "react-custom-scrollbars-2": "4.4.0",
+    "react-chartjs-2": "^3.0.4",
     "nprogress": "0.2.0",
     "yup": "^0.32.11"
   },
