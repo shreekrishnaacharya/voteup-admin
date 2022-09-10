@@ -1,3 +1,8 @@
+const adminPages = {
+    USER: "/user",
+    PROFILE: "/profile"
+}
+
 const voterPages = {
     VOTER: "/voter",
     VOTER_VIEW: "/voter/view",
@@ -34,7 +39,7 @@ const sitePage = {
 
 const pages = {
     // BASE_URL: "https://app-f51dd389-d290-44a4-914c-af2905391a7c.cleverapps.io",
-    BASE_URL: "http://localhost:8081/admin",
+    BASE_URL: "http://localhost:8080/admin",
     // LOCAL_URL: "http://localhost:3000",
     GUEST: "/guest",
     HOME: "/",
@@ -43,7 +48,8 @@ const pages = {
     ...reportPages,
     ...feedPages,
     ...postPages,
-    ...settingPages
+    ...settingPages,
+    ...adminPages
 };
 
 const guestPage = [
@@ -59,4 +65,4 @@ const getFullUrl = (page) => {
     return pages.LOCAL_URL + "#" + page;
 }
 
-export { pages, sitePage, reportPages, voterPages, feedPages, postPages, settingPages, guestPage, getFullUrl };
+export { pages, sitePage, reportPages, voterPages, adminPages, feedPages, postPages, settingPages, guestPage, getFullUrl };

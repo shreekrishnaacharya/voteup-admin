@@ -103,6 +103,9 @@ const isEmpty = (value) => {
     return false;
 };
 
+const CapitalText = (text) => {
+    return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+}
 
 export {
     isEmpty,
@@ -110,5 +113,6 @@ export {
     getJsonForm,
     getJsonForms,
     getUpdateKey,
-    getDateString
+    getDateString,
+    CapitalText
 }

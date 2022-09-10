@@ -5,26 +5,10 @@ import {
   Skeleton,
   Badge
 } from "@mui/material";
+import { StatusList } from "links/constant";
 
 
-const stat = {
-  "Reviwing": {
-    "batch": "reviewing",
-    "color": "info"
-  },
-  "Voting": {
-    "batch": "voting",
-    "color": "secondary"
-  },
-  "Accepted": {
-    "batch": "accepted",
-    "color": "success"
-  },
-  "Rejected": {
-    "batch": "rejected",
-    "color": "error"
-  }
-};
+
 const colorList = ["info", "black", "warning"];
 let monthList = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
@@ -56,26 +40,22 @@ const getLineChart = (dataL) => {
   };
 };
 
-const getVotePie = (dataL) => {
+const getPostsPie = (dataL) => {
   let labels = [], data = [];
-  dataL.forEach((da, i) => {
-    labels[i] = da.label;
-    data[i] = da.value;
+  Object.keys(StatusList).forEach((e) => {
+    labels[e] = StatusList[e].name;
+    data[e] = 0;
+  })
+  dataL.forEach((da) => {
+    labels[da.status] = da.name;
+    data[da.status] = da.value;
   });
   return {
     labels,
     datasets: {
       data,
       hoverOffset: 4,
-      backgroundColors: [
-        "info",
-        "success",
-        "light",
-        "dark"
-        // 'rgb(255, 99, 132)',
-        // 'rgb(54, 162, 235)',
-        // 'rgb(255, 205, 86)'
-      ],
+      backgroundColors: Object.values(StatusList).map(e => e.color),
     }
   };
 }
@@ -99,21 +79,21 @@ function Text({ text, edge, warpLength }) {
 
 
 function Status({ status }) {
+  console.log(status)
   return (
-    <Badge variant="gradient" badgeContent={stat[status].batch} color={stat[status].color} size="extra-small" />
+    <Badge variant="gradient" badgeContent={StatusList[status].name} color={StatusList[status].color} size="extra-small" />
   );
 }
 
 const modelList = (list, handleView) => {
-  return list.map(({ _id, username, status, post_detail, supporters, down_vote, up_vote, review, create_at }) => {
+  return list.map(({ _id, username, statusCode, post_detail, supporters, tot_votes, review, create_at }) => {
     return {
       username: <Text text={username} />,
       post_detail: <Text text={post_detail} warpLength={1} />,
       review: <Text text={review} />,
-      up_vote: <Text text={up_vote} />,
-      down_vote: <Text text={down_vote} />,
+      votes: <Text text={tot_votes} />,
       supporters: <Text text={supporters} />,
-      status: <Status status={status} />,
+      status: <Status status={statusCode} />,
       create_at: <Text text={create_at} />,
       action: (
         <a style={{ cursor: "pointer" }} onClick={() => { handleView(_id) }}>
@@ -185,8 +165,7 @@ const columns = [
   { name: "username", align: "left" },
   { name: "post_detail", align: "left" },
   { name: "review", align: "left" },
-  { name: "up_vote", align: "left" },
-  { name: "down_vote", align: "left" },
+  { name: "votes", align: "left" },
   { name: "supporters", align: "left" },
   { name: "create_at", align: "left", label: "Create At" },
   { name: "status", align: "center" },
@@ -201,7 +180,7 @@ const Temp = {
 
 export {
   getLineChart,
-  getVotePie,
+  getPostsPie,
   columns,
   Temp,
   modelList,

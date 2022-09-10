@@ -14,6 +14,7 @@ import { Temp } from '../model/list';
 import Text from "components/Text";
 import Post from "common/view/Post";
 import PostLoad from "common/view/PostLoad";
+import Comment from "view/main/post/view/Comment";
 
 function ReportView() {
     const { enqueueSnackbar } = useSnackbar();
@@ -29,7 +30,6 @@ function ReportView() {
             .then((res) => {
                 if (res.flag) {
                     setReportData(res.data);
-                    console.log(res.data)
                     getViewPost(res.data.postid).then(e => {
                         setPostData(e.data)
                     })
@@ -130,7 +130,7 @@ function ReportView() {
                             </Grid>
                             <Grid item xs={9}>
                                 <Typography fontWeight="medium">
-                                    :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<Type type={reportData.type} />
+                                    :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<Type type={reportData.type} />
                                 </Typography>
                             </Grid>
                             <Grid item xs={3}>
@@ -150,7 +150,7 @@ function ReportView() {
             <Box my={3}>
                 <Card>
                     <Box display="flex" justifyContent="space-between" alignItems="center" p={2}>
-                        <Typography variant="h3">{"Comment"}</Typography>
+                        <Typography variant="h3">{"Review"}</Typography>
                     </Box>
                     <Divider />
                     <Box mb={3} px={3} py={2}>
@@ -172,7 +172,7 @@ function ReportView() {
                                 {reportData.type === "POST" ? (
                                     <Post post={postData} viewPost={viewPost} />
                                 ) : (
-                                    <Comment />
+                                    <Comment comment={{ ...postData, comment: postData.post_detail }} />
                                 )}
                             </>
                         )}

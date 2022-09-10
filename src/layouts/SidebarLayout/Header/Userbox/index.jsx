@@ -13,7 +13,8 @@ import {
   ListItemText,
   Popover,
   Typography,
-  styled
+  styled,
+  lighten
 } from '@mui/material';
 
 import ExpandMoreTwoToneIcon from '@mui/icons-material/ExpandMoreTwoTone';
@@ -52,17 +53,17 @@ const UserBoxLabel = styled(Typography)(
 `
 );
 
-// const UserBoxDescription = styled(Typography)(
-//   ({ theme }) => `
-//         color: ${lighten(theme.palette.secondary.main, 0.5)}
-// `
-// );
+const UserBoxDescription = styled(Typography)(
+  ({ theme }) => `
+        color: ${lighten(theme.palette.secondary.main, 0.5)}
+`
+);
 
 function HeaderUserbox() {
 
   const history = useHistory();
-  // const user = tokenService.getUser();
-  const user={name:"krishna",img:null}
+  const user = tokenService.getUser();
+  // const user={name:"krishna",img:null}
   const ref = useRef(null);
   const [isOpen, setOpen] = useState(false);
 
@@ -89,9 +90,9 @@ function HeaderUserbox() {
         <Hidden mdDown>
           <UserBoxText>
             <UserBoxLabel variant="body1">{user.name}</UserBoxLabel>
-            {/* <UserBoxDescription variant="body2">
-              {user.jobtitle}
-            </UserBoxDescription> */}
+            <UserBoxDescription variant="body2">
+              {user.role}
+            </UserBoxDescription>
           </UserBoxText>
         </Hidden>
         <Hidden smDown>
@@ -115,29 +116,29 @@ function HeaderUserbox() {
           <Avatar variant="rounded" alt={user.name} src={user.img} />
           <UserBoxText>
             <UserBoxLabel variant="body1">{user.name}</UserBoxLabel>
-            {/* <UserBoxDescription variant="body2">
-              {user.jobtitle}
-            </UserBoxDescription> */}
+            <UserBoxDescription variant="body2">
+              {user.role}
+            </UserBoxDescription>
           </UserBoxText>
         </MenuUserBox>
         <Divider sx={{ mb: 0 }} />
         <List sx={{ p: 1 }} component="nav">
-          <ListItem button to={pages.PROFILE} component={NavLink}>
+          <ListItem to={pages.PROFILE} component={NavLink} onClick={handleClose}>
             <AccountBoxTwoToneIcon fontSize="small" />
             <ListItemText primary="My Profile" />
           </ListItem>
-          {/* <ListItem button to="/dashboards/messenger" component={NavLink}>
+          {/* <ListItem button to="/dashboards/messenger" component={NavLink} onClick={handleClose}>
             <InboxTwoToneIcon fontSize="small" />
             <ListItemText primary="Messenger" />
           </ListItem> */}
-          <ListItem
+          {/* <ListItem
             button
             to="/management/profile/settings"
             component={NavLink}
           >
             <AccountTreeTwoToneIcon fontSize="small" />
             <ListItemText primary="Account Settings" />
-          </ListItem>
+          </ListItem> */}
         </List>
         <Divider />
         <Box sx={{ m: 1 }}>

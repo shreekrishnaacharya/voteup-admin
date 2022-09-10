@@ -17,11 +17,12 @@ import Logo from 'components/Logo';
 
 const SidebarWrapper = styled(Box)(
   ({ theme }) => `
+        margin-top: ${theme.header.height};
         width: ${theme.sidebar.width};
         min-width: ${theme.sidebar.width};
         color: ${theme.colors.alpha.trueWhite[70]};
         position: relative;
-        z-index: 7;
+        z-index: 6;
         height: 100%;
         padding-bottom: 68px;
 `
@@ -52,18 +53,6 @@ function Sidebar() {
         }}
       >
         <Scrollbar>
-          <Box
-            sx={{
-              width: "100%",
-            }}
-          >
-            <Logo />
-          </Box>
-          <Divider
-            sx={{
-              background: theme.colors.alpha.trueWhite[10]
-            }}
-          />
           <SidebarMenu />
         </Scrollbar>
       </SidebarWrapper>
@@ -72,7 +61,7 @@ function Sidebar() {
           boxShadow: `${theme.sidebar.boxShadow}`
         }}
         anchor={theme.direction === 'rtl' ? 'right' : 'left'}
-        // open={sidebarToggle}
+        // open={true}
         // onClose={closeSidebar}
         variant="temporary"
         elevation={9}
@@ -86,23 +75,6 @@ function Sidebar() {
           }}
         >
           <Scrollbar>
-            <Box mt={3}>
-              <Box
-                mx={2}
-                sx={{
-                  width: 52
-                }}
-              >
-                <Logo />
-              </Box>
-            </Box>
-            <Divider
-              sx={{
-                mt: theme.spacing(3),
-                mx: theme.spacing(2),
-                background: theme.colors.alpha.trueWhite[10]
-              }}
-            />
             <SidebarMenu />
           </Scrollbar>
         </SidebarWrapper>

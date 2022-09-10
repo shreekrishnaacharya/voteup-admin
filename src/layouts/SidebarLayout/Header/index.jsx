@@ -20,7 +20,7 @@ const HeaderWrapper = styled(Box)(
         padding: ${theme.spacing(0, 2)};
         top: 0;
         right: 0;
-        z-index: 6;
+        z-index: 7;
         background-color: ${alpha(theme.header.background, 0.95)};
         backdrop-filter: blur(3px);
         position: fixed;

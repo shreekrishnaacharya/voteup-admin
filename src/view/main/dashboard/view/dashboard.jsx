@@ -6,7 +6,7 @@ import MiniStatisticsCard from "components/charts/MiniStatisticsCard";
 import GradientLineChart from "components/charts/LineCharts/GradientLineChart";
 import PieChart from "components/charts/PieChart";
 
-import { getLineChart, getVotePie } from "../model/list";
+import { getLineChart, getPostsPie } from "../model/list";
 import { getDashboard } from "../service";
 import { useDispatch, useSelector } from "react-redux";
 import { setDashboard } from "redux/action/dboardAction";
@@ -24,7 +24,7 @@ function Dashboard() {
           dispatch(setDashboard({
             minicard: res.data.minicard,
             line: getLineChart(res.data.trend),
-            votes: getVotePie(res.data.votes),
+            posts: getPostsPie(res.data.posts),
           }));
         } else {
           console.log("no length")
@@ -140,7 +140,7 @@ function Dashboard() {
               <PieChart
                 title="Voting Ratio"
                 height="26rem"
-                chart={dboardData.votes}
+                chart={dboardData.posts}
               />
             )}
 

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import {
     Box,
     Typography,
@@ -6,43 +7,67 @@ import {
     CardContent,
     Divider,
     Avatar,
+    IconButton,
     Button,
     CardActions,
     Link,
     styled,
+    Menu,
+    MenuItem,
+    Grid
 } from '@mui/material';
 
+import MoreHorizTwoToneIcon from '@mui/icons-material/MoreHorizTwoTone';
+import ShareTwoToneIcon from '@mui/icons-material/ShareTwoTone';
 import Text from 'components/Text';
 import ReactTimeAgo from 'react-time-ago'
 import React, { useState } from 'react';
-// import ImageList from '@mui/material/ImageList';
-// import ImageListItem from '@mui/material/ImageListItem';
+import CommentTwoToneIcon from '@mui/icons-material/CommentTwoTone';
+import VoteButton from 'components/buttons/VoteButtons';
+import ImageList from '@mui/material/ImageList';
+import ImageListItem from '@mui/material/ImageListItem';
 import Ranking from 'components/Ranking';
-import HowToVoteIcon from '@mui/icons-material/HowToVote';
-import InsertCommentIcon from '@mui/icons-material/InsertComment';
-import ErrorIcon from '@mui/icons-material/Error';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+
 import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 import PollIcon from '@mui/icons-material/Poll';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-import ImageList from '@mui/material/ImageList';
-import ImageListItem from '@mui/material/ImageListItem';
-
+import { StatusCode, StatusList } from 'links/constant';
 const CardActionsWrapper = styled(CardActions)(
     ({ theme }) => `
        background: ${theme.colors.alpha.black[5]};
        padding: ${theme.spacing(3)};
   `
 );
-const statusList = {
-    0: { color: 'info', icon: <InsertCommentIcon sx={{ mr: 1 }} /> },
-    1: { color: 'primary', icon: <HowToVoteIcon sx={{ mr: 1 }} /> },
-    2: { color: 'success', icon: <CheckCircleIcon sx={{ mr: 1 }} /> },
-    3: { color: 'error', icon: <ErrorIcon sx={{ mr: 1 }} /> },
-}
 
-function Post({ post, userModel, isOpen }) {
+
+
+function Post({ post, onMenu, onVote, userModel, viewPost, isOpen }) {
     // console.log(post)
+    // const [paction, setPaction] = useState({
+    //     votes: post.votes,
+    //     hasVote: post.hasVote,
+    //     review: post.review
+    // });
+
+
+    const [anchorEl, setAnchorEl] = useState(null);
+
+    const open = Boolean(anchorEl);
+    const handleOptionClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleOptionClose = () => {
+        setAnchorEl(null);
+    };
+    const handleOptionAction = (type) => {
+        onMenu(post._id, type)
+        setAnchorEl(null);
+    }
+
+    // useEffect(() => {
+    //     setPaction(post);
+    // }, [post]);
+
 
     let tagsList = [];
     if (post.tags !== null) {
@@ -77,6 +102,14 @@ function Post({ post, userModel, isOpen }) {
                             {...srcset(item.img, 151, item.rows, item.cols)}
                             alt={item.title}
                             loading="lazy"
+                        // onClick={(e) => {
+                        //     openLightbox(e, {
+                        //         index,
+                        //         photo: photos[index],
+                        //         previous: photos[index - 1] || null,
+                        //         next: photos[index + 1] || null,
+                        //     })
+                        // }}
                         />
                     </ImageListItem>
                 ))}
@@ -88,23 +121,16 @@ function Post({ post, userModel, isOpen }) {
             <Card>
                 <CardHeader
                     avatar={<Avatar src={post.user_dp} />}
-                    // action={
-                    //     <>
-                    //         <IconButton
-                    //             color="primary"
-                    //             onClick={handleOptionClick}
-                    //         >
-                    //             <MoreHorizTwoToneIcon fontSize="medium" />
-                    //         </IconButton>
-                    //         <Menu
-                    //             anchorEl={anchorEl}
-                    //             open={open}
-                    //             onClose={handleOptionClose}
-                    //         >
-                    //             <MenuItem onClick={() => { handleOptionAction(0) }}>Report</MenuItem>
-                    //         </Menu>
-                    //     </>
-                    // }
+                    action={
+                        <>
+                            <IconButton
+                                color="primary"
+                                onClick={handleOptionClick}
+                            >
+                                <MoreHorizTwoToneIcon fontSize="medium" />
+                            </IconButton>
+                        </>
+                    }
                     titleTypographyProps={{ variant: 'h4' }}
                     subheaderTypographyProps={{ variant: 'subtitle2' }}
                     title={post.username}
@@ -146,15 +172,26 @@ function Post({ post, userModel, isOpen }) {
                     >
                         <Grid item xl={6} >
                             <Grid container direction={'row'} spacing={1}>
-                                {isOpen ? (
-                                    <Button disabled startIcon={<ThumbUpAltTwoTone />} variant={"outlined"}>
-                                        Vote
+                                <Grid item xl={6}>
+                                    {!isOpen && (
+                                        <Button
+                                            startIcon={<CommentTwoToneIcon />}
+                                            variant="outlined"
+                                            sx={{ mx: 2 }}
+                                            onClick={() => {
+                                                viewPost(post._id)
+                                            }}
+                                        >
+                                            Review
+                                        </Button>
+                                    )}
+
+                                </Grid>
+                                <Grid item xl={6}>
+                                    <Button startIcon={<ShareTwoToneIcon />} variant="outlined">
+                                        Share
                                     </Button>
-                                ) : (
-                                    <Button disabled startIcon={<CommentTwoTone />} variant="outlined">
-                                        Review
-                                    </Button>
-                                )}
+                                </Grid>
                             </Grid>
                         </Grid>
                         <Grid item xl={6} >
@@ -165,16 +202,16 @@ function Post({ post, userModel, isOpen }) {
                             }}>
                                 <Text
                                     sx={{ display: 'flex', mr: 1 }}
-                                    color={statusList[post.statusCode].color}
+                                    color={StatusList[post.statusCode].color}
                                 >
-                                    {statusList[post.statusCode].icon}{post.status}
+                                    {StatusList[post.statusCode].icon}{post.status}
                                 </Text>{'|'}
                                 <Text
                                     sx={{ display: 'flex', mx: 1 }}
                                 >
                                     <QuestionAnswerIcon sx={{ mr: 1 }} />{post.review}
                                 </Text>
-                                {post.statusCode > 0 && (
+                                {post.statusCode > StatusCode.REVIEW && (
                                     <>{'|'}
                                         <Text
                                             sx={{ display: 'flex', mx: 1 }}
@@ -198,4 +235,17 @@ function Post({ post, userModel, isOpen }) {
     );
 }
 
+
+Post.propTypes = {
+    post: PropTypes.object.isRequired,
+    onMenu: PropTypes.func.isRequired,
+    userModel: PropTypes.object.isRequired,
+    viewPost: PropTypes.func.isRequired,
+    onVote: PropTypes.func,
+    isOpen: PropTypes.bool
+}
+
+Post.defaultProps = {
+    isOpen: false,
+}
 export default Post;  
