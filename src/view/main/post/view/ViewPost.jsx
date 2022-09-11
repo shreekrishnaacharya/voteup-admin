@@ -19,18 +19,6 @@ const ViewPost = () => {
     const postid = params.get('id');
 
     useEffect(() => {
-        getComments(postid).then(res => {
-            if (res.flag) {
-                setComments(res.data);
-                setCLoading(false);
-            }
-        })
-        return () => {
-            setComments([])
-        }
-    }, []);
-
-    useEffect(() => {
         getViewPost(postid).then(res => {
             if (res.flag) {
                 setPost(res.data);
@@ -55,17 +43,15 @@ const ViewPost = () => {
             )
             }
             <Box sx={{ marginLeft: '40px' }}>
-                {comments.length > 0 ? (
-                    <Text sx={{ margin: "10px 0px" }} varient={'h1'}>Review</Text>
-                ) : ("")}
-                {cloading ? (
+                <Text varient={'h1'}>Review</Text>
+                {loading ? (
                     <>
                         <CommentLoad />
                         <CommentLoad />
                     </>
                 ) : (
                     <>
-                        {comments.map(comment => {
+                        {postFeeds.comments.map(comment => {
                             return <Comment key={comment._id} comment={comment} />
                         })}
                     </>

@@ -5,15 +5,18 @@ import {
     Card,
     Box,
     Divider,
+    Switch,
 } from '@mui/material';
-import DoneTwoToneIcon from '@mui/icons-material/DoneTwoTone';
-import Label from 'components/Label';
-import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 import Text from 'components/Text';
 import React from "react";
 import { getDateString } from '_services'
+import { Temp } from '../../model/list'
 
-export default function AccountDetail({ userProfile }) {
+export default function AccountDetail({ userProfile, updateProfile }) {
+    const { Status, Kyc } = Temp
+    const handleStatus = () => {
+        updateProfile({ status: userProfile.statusCode == 1 ? 0 : 1 });
+    }
     return (
         <Card>
             <Box
@@ -61,17 +64,12 @@ export default function AccountDetail({ userProfile }) {
                             </Box>
                         </Grid>
                         <Grid item xs={12} sm={8} md={9}>
-                            {userProfile.kyc == "Verified" ? (
-                                <Label color="success">
-                                    <DoneTwoToneIcon fontSize="small" />
-                                    <b>&nbsp;{userProfile.kyc}</b>
-                                </Label>
-                            ) : (
-                                <Label color="warning">
-                                    <ReportProblemIcon fontSize="small" />
-                                    <b>&nbsp;{userProfile.kyc}</b>
-                                </Label>
-                            )}
+                            <Kyc kyc={userProfile.kyc} sx={{
+                                ml: 4,
+                                ".MuiBadge-badge": {
+                                    width: "70px"
+                                }
+                            }} />
                         </Grid>
                         <Grid item xs={12} sm={4} md={3} textAlign={{ sm: 'right' }}>
                             <Box pr={3} pb={2}>
@@ -79,17 +77,8 @@ export default function AccountDetail({ userProfile }) {
                             </Box>
                         </Grid>
                         <Grid item xs={12} sm={8} md={9}>
-                            {userProfile.status == "Active" ? (
-                                <Label color="success">
-                                    <DoneTwoToneIcon fontSize="small" />
-                                    <b>&nbsp;{userProfile.status}</b>
-                                </Label>
-                            ) : (
-                                <Label color="warning">
-                                    <ReportProblemIcon fontSize="small" />
-                                    <b>&nbsp;{userProfile.status}</b>
-                                </Label>
-                            )}
+                            <Status status={userProfile.status} sx={{ ml: 4 }} />
+                            <Switch onClick={handleStatus} sx={{ ml: 5 }} {...(Boolean(userProfile.status) ? { defaultChecked: true } : {})} color={userProfile.statusCode == 1 ? 'success' : 'error'} />
                         </Grid>
                         <Grid item xs={12} sm={4} md={3} textAlign={{ sm: 'right' }}>
                             <Box pr={3} pb={2}>

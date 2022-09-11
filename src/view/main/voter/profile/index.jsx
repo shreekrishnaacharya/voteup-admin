@@ -1,7 +1,7 @@
 import ProfileCover from './ProfileCover';
 import PopularTags from './PopularTags';
 import { useState, useEffect } from 'react';
-import { getVoterView } from '../service';
+import { getVoterUpdate, getVoterView } from '../service';
 import EditProfileTab from './EditProfileTab';
 import { Container, Tabs, Tab, Grid, styled, Button } from '@mui/material';
 import { pages } from 'links';
@@ -16,7 +16,7 @@ const TabsWrapper = styled(Tabs)(
 `);
 
 function ManagementUserProfile() {
-  const [currentTab, setCurrentTab] = useState('activity');
+  const [currentTab, setCurrentTab] = useState('edit_profile');
   const [userProfile, setProfile] = useState(null);
   const location = useLocation();
   const params = new URLSearchParams(location.search);
@@ -30,14 +30,25 @@ function ManagementUserProfile() {
   const handleTabsChange = (event, value) => {
     setCurrentTab(value);
   };
-  useEffect(() => {
+  const loadProfile = () => {
     getVoterView(id).then((e) => {
       if (e.flag) {
         setProfile(e.data)
       }
     })
+  }
+
+  useEffect(() => {
+    loadProfile()
   }, [])
 
+  const updateProfile = (data) => {
+    getVoterUpdate(id, data).then(e => {
+      if (e.flag) {
+        loadProfile()
+      }
+    })
+  }
   return (
     <>
       <Grid
@@ -68,7 +79,7 @@ function ManagementUserProfile() {
             "Loading"
           ) : (
             <>
-              {currentTab === 'edit_profile' && <EditProfileTab userProfile={userProfile} />}
+              {currentTab === 'edit_profile' && <EditProfileTab userProfile={userProfile} updateProfile={updateProfile} />}
               {currentTab === 'activity' && <Feed userModel={userProfile} feedType={'profile'} />}
               {currentTab === 'populat_tags' && <PopularTags />}
             </>

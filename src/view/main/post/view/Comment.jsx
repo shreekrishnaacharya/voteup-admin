@@ -40,7 +40,7 @@ function Comment({ comment }) {
                 />
                 <Box px={2} pb={1}>
                     <Typography variant="h5" fontWeight="normal">
-                        {comment.comment}
+                        {comment.post_detail}
                     </Typography>
                 </Box>
                 <Box px={2}>

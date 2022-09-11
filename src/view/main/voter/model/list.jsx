@@ -10,16 +10,6 @@ import {
   Badge
 } from "@mui/material";
 
-const stat = {
-  "Active": {
-    "batch": "active",
-    "color": "success"
-  },
-  "Inactive": {
-    "batch": "inactive",
-    "color": "secondary"
-  }
-};
 function Pimg({ image, name, code }) {
   return (
     <Box display="flex"
@@ -64,21 +54,25 @@ function Name({ name, code }) {
 }
 
 
-function Status({ status }) {
+function Status({ status, ...rest }) {
   return (
-    <Badge variant="gradient" badgeContent={status} color={status == "Active" ? "success" : "warning"} size="extra-small" />
+    <Badge variant="gradient" badgeContent={status} color={status == "Active" ? "success" : "error"} {...rest} />
   );
 }
 
-function Kyc({ kyc }) {
+function Kyc({ kyc, ...rest }) {
   return (
-    <Badge sx={{
-      ".MuiBadge-badge": {
-        width: "70px"
-      }
-    }} variant="gradient" badgeContent={kyc} color={kyc == "Verified" ? "success" : "warning"} />
+    <Badge
+      sx={{
+        ".MuiBadge-badge": {
+          width: "70px"
+        }
+      }}
+      variant="gradient" badgeContent={kyc} color={kyc == "Verified" ? "success" : "warning"
+      } {...rest} />
   );
 }
+
 const modelList = (list, handleView) => {
   return list.map(({ _id, name, status, contact, email, kyc, image }) => {
     return {
@@ -87,7 +81,7 @@ const modelList = (list, handleView) => {
       email: <Text text={email} />,
       contact: <Text text={contact} />,
       kyc: <Kyc kyc={kyc} />,
-      status: <Status status={status} />,
+      status: <Status status={status} size="extra-small" />,
       action: (
         <a style={{ cursor: "pointer" }} onClick={() => { handleView(_id, name) }}>
           <Typography
@@ -189,7 +183,8 @@ const columns = [
 ];
 
 const Temp = {
-  Status
+  Status,
+  Kyc
 }
 
 

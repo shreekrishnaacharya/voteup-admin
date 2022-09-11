@@ -36,8 +36,19 @@ async function getVoterView(id) {
     });
 }
 
+async function getVoterUpdate(id, data) {
+    return await getApiRequest({
+        url: "/voter/" + id,
+        method: 'put',
+        data
+    }).then((result) => {
+        return result;
+    });
+}
+
 
 export {
     getVoterList,
-    getVoterView
+    getVoterView,
+    getVoterUpdate
 };
