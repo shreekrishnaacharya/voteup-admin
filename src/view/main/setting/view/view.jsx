@@ -182,7 +182,7 @@ export default function Setting() {
                                                     variant="standard"
                                                     {...field}
                                                     type={'number'}
-                                                /> Day(s)
+                                                /> Percent(%)
                                                 {fieldState.error && (
                                                     <FormHelperText error>
                                                         {fieldState.error?.message}
@@ -193,7 +193,7 @@ export default function Setting() {
                                     />
                                 ) : (
                                     <Text color="black">
-                                        <b>{settingData.approve_on}</b> Day(s)
+                                        <b>{settingData.approve_on}</b> Percent(%)
                                     </Text>
                                 )
                                 }

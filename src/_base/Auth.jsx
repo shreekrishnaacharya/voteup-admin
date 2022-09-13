@@ -12,10 +12,12 @@ const Auth = ({ children }) => {
         if (userModel && userModel.isLogin) {
             if (guestPage.includes(location.pathname)) {
                 history.push(pages.HOME);
+                return true;
             }
         } else {
             if (!guestPage.includes(location.pathname)) {
                 history.push(pages.LOGIN);
+                return false;
             }
         }
         return (
