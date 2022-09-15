@@ -3,15 +3,9 @@ import {
     Typography,
     Card,
     CardHeader,
-    Divider,
     Avatar,
-    IconButton,
-    Button,
     CardActions,
     styled,
-    Stack,
-    Menu,
-    MenuItem
 } from '@mui/material';
 
 import ThumbUpAltTwoToneIcon from '@mui/icons-material/ThumbUpAltTwoTone';

@@ -1,9 +1,9 @@
 import { Box } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { getComments, getViewPost } from "../service";
+import { getViewPost } from "../service";
 import Post from "common/view/Post";
 import PostLoad from "common/view/PostLoad";
-import { useLocation, useHistory } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import Comment from "./Comment";
 import Text from "components/Text";
 import CommentLoad from "./CommentLoad";
@@ -11,9 +11,7 @@ import CommentLoad from "./CommentLoad";
 const ViewPost = () => {
     const location = useLocation();
     const [loading, setLoading] = useState(true);
-    const [cloading, setCLoading] = useState(true);
     const [postFeeds, setPost] = useState({});
-    const [comments, setComments] = useState([]);
 
     const params = new URLSearchParams(location.search);
     const postid = params.get('id');
@@ -43,7 +41,7 @@ const ViewPost = () => {
             )
             }
             <Box sx={{ marginLeft: '40px' }}>
-                <Text varient={'h1'}>Review</Text>
+                <Text varient={'h1'}>Amend/Dissent</Text>
                 {loading ? (
                     <>
                         <CommentLoad />

@@ -5,7 +5,7 @@
   "author": "Krishna Acharya",
   "license": "MIT Licenses",
   "description": "",
-  "homepage": "https://app-f51dd389-d290-44a4-914c-af2905391a7c.cleverapps.io",
+  "homepage": "http://ventvoila/admin",
   "dependencies": {
     "@ant-design/colors": "^4.0.0-alpha.0",
     "@ant-design/icons": "^4.0.0-rc.0",
@@ -62,7 +62,7 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://app-f51dd389-d290-44a4-914c-af2905391a7c.cleverapps.io",
+  "proxy": "http://ventvoila/admin",
   "devDependencies": {
     "prettier": "^2.3.2"
   }

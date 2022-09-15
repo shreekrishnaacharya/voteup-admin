@@ -112,7 +112,6 @@ function ReportView() {
                                     :&nbsp;&nbsp;{reportData.user}
                                 </Typography>
                             </Grid>
-
                             <Grid item xs={3}>
                                 <Typography fontWeight="regular">
                                     Create At
@@ -125,12 +124,22 @@ function ReportView() {
                             </Grid>
                             <Grid item xs={3}>
                                 <Typography fontWeight="regular">
+                                    Voilance
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={9}>
+                                <Typography fontWeight="medium">
+                                    : {reportData.rtype}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={3}>
+                                <Typography fontWeight="regular">
                                     Type
                                 </Typography>
                             </Grid>
                             <Grid item xs={9}>
                                 <Typography fontWeight="medium">
-                                    :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<Type type={reportData.type} />
+                                    :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<Type type={reportData.rtype} />
                                 </Typography>
                             </Grid>
                             <Grid item xs={3}>
@@ -176,7 +185,6 @@ function ReportView() {
                                 )}
                             </>
                         )}
-
                     </Box>
                 </Card>
             </Box>
