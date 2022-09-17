@@ -2,13 +2,13 @@
 // Soft UI Dashboard React components
 
 import {
-  Avatar,
   Typography,
   Box,
   Pagination,
   Skeleton,
   Badge
 } from "@mui/material";
+import Txt from "components/Text";
 
 const stat = {
   "Pending": {
@@ -19,11 +19,13 @@ const stat = {
     "batch": "ignore",
     "color": "secondary"
   },
-  "Action": {
+  "Closed": {
     "batch": "closed",
-    "color": "primary"
+    "color": "error"
   }
 };
+
+
 
 function Text({ text, edge, warpLength }) {
   return (
@@ -33,10 +35,10 @@ function Text({ text, edge, warpLength }) {
       pt={1.5}
       pb={1.25}
     >
-      <Typography
+      <Txt
         warpLength={warpLength}>
         {text}
-      </Typography>
+      </Txt>
     </Box>
   );
 }
@@ -44,7 +46,6 @@ function Text({ text, edge, warpLength }) {
 
 
 function Status({ status }) {
-  console.log(stat[status], status)
   return (
     <Badge variant="gradient" badgeContent={stat[status].batch} color={stat[status].color} size="extra-small" />
   );
@@ -67,7 +68,6 @@ const modelList = (list, handleView) => {
         <a style={{ cursor: "pointer" }} onClick={() => { handleView(_id) }}>
           <Typography
             variant="caption"
-            textColor="primary"
             fontWeight="medium"
           >View</Typography>
         </a>
@@ -83,7 +83,6 @@ const modelListEmpty = () => {
         { "colSpan": "7", style: { textAlign: "center" } },
         <Typography
           component="span"
-          textColor="secondary"
           fontWeight="medium"
           p={20}
         >No data found</Typography>

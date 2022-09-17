@@ -41,7 +41,7 @@ const CardActionsWrapper = styled(CardActions)(
 
 
 
-function Post({ post, onMenu, onVote, userModel, viewPost, isOpen }) {
+function Post({ post, viewPost, isOpen }) {
     // console.log(post)
     // const [paction, setPaction] = useState({
     //     votes: post.votes,
@@ -238,10 +238,7 @@ function Post({ post, onMenu, onVote, userModel, viewPost, isOpen }) {
 
 Post.propTypes = {
     post: PropTypes.object.isRequired,
-    onMenu: PropTypes.func.isRequired,
-    userModel: PropTypes.object.isRequired,
     viewPost: PropTypes.func.isRequired,
-    onVote: PropTypes.func,
     isOpen: PropTypes.bool
 }
 

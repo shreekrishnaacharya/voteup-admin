@@ -56,7 +56,7 @@ const Feed = ({ userModel, feedType }) => {
       ) : (
         <>
           {postFeeds.map(post => {
-            return <Post key={post._id} post={post} viewPost={viewPost} />
+            return <Post key={post._id} post={post} viewPost={viewPost} userModel={userModel} />
           })}
         </>
       )

@@ -27,7 +27,6 @@ function Dashboard() {
             posts: getPostsPie(res.data.posts),
           }));
         } else {
-          console.log("no length")
           dispatch(setDashboard({}));
         }
       }
@@ -73,7 +72,7 @@ function Dashboard() {
               <Skeleton height={80} variant="rounded" />
             ) : (
               <MiniStatisticsCard
-                title={{ text: "Reivew" }}
+                title={{ text: "Review" }}
                 count={minicard.comments.new}
                 percentage={{ color: "success", text: minicard.comments.total }}
                 icon={{ color: "warning", component: "comment" }}

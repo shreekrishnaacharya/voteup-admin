@@ -43,10 +43,11 @@ function ManagementUserProfile() {
   }, [])
 
   const updateProfile = (data) => {
-    getVoterUpdate(id, data).then(e => {
+    return getVoterUpdate(id, data).then(e => {
       if (e.flag) {
         loadProfile()
       }
+      return e
     })
   }
   return (

@@ -44,10 +44,11 @@ async function getReports(pages) {
         return result;
     });
 }
-async function updateReport(id) {
+async function updateReport(id, data) {
     return await getApiRequest({
-        url: "/update/" + id,
+        url: "/report/" + id,
         method: "put",
+        data
     }).then((result) => {
         return result;
     });

@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 // Soft UI Dashboard React components
 
+import Label from 'components/Label';
 import {
   Avatar,
   Typography,
@@ -9,7 +10,8 @@ import {
   Skeleton,
   Badge
 } from "@mui/material";
-
+import { KycStatusList } from "links/constant";
+import Txt from 'components/Text';
 function Pimg({ image, name, code }) {
   return (
     <Box display="flex"
@@ -30,10 +32,10 @@ function Text({ text, edge, warpLength }) {
       pt={1.5}
       pb={1.25}
     >
-      <Typography
+      <Txt
         warpLength={warpLength}>
         {text}
-      </Typography>
+      </Txt>
     </Box>
   );
 }
@@ -60,33 +62,27 @@ function Status({ status, ...rest }) {
   );
 }
 
-function Kyc({ kyc, ...rest }) {
+function Kyc({ kyc, kycCode }) {
   return (
-    <Badge
-      sx={{
-        ".MuiBadge-badge": {
-          width: "70px"
-        }
-      }}
-      variant="gradient" badgeContent={kyc} color={kyc == "Verified" ? "success" : "warning"
-      } {...rest} />
+    <Label color={KycStatusList[kycCode].color}>
+      {KycStatusList[kycCode].icon}{kyc}
+    </Label>
   );
 }
 
 const modelList = (list, handleView) => {
-  return list.map(({ _id, name, status, contact, email, kyc, image }) => {
+  return list.map(({ _id, name, status, contact, email, kycStatus, kycStatusCode, image }) => {
     return {
       image: <Pimg image={image} name={name} />,
       name: <Text text={name} />,
       email: <Text text={email} />,
       contact: <Text text={contact} />,
-      kyc: <Kyc kyc={kyc} />,
+      kyc: <Kyc kyc={kycStatus} kycCode={kycStatusCode} />,
       status: <Status status={status} size="extra-small" />,
       action: (
         <a style={{ cursor: "pointer" }} onClick={() => { handleView(_id, name) }}>
           <Typography
             variant="caption"
-            textColor="primary"
             fontWeight="medium"
           >View</Typography>
         </a>
@@ -102,7 +98,6 @@ const modelListEmpty = () => {
         { "colSpan": "7", style: { textAlign: "center" } },
         <Typography
           component="span"
-          textColor="secondary"
           fontWeight="medium"
           p={20}
         >No data found</Typography>
@@ -177,7 +172,7 @@ const columns = [
   { name: "name", align: "left" },
   { name: "email", align: "left" },
   { name: "contact", align: "left" },
-  { name: "kyc", align: "center" },
+  { name: "kyc", align: "left" },
   { name: "status", align: "center" },
   { name: "action", align: "center" },
 ];
