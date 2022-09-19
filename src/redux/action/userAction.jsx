@@ -5,7 +5,7 @@ export const setLogin = (user) => {
         ...user,
         isLogin: true
     };
-    window.localStorage.setItem("userModel", JSON.stringify(user));
+    window.localStorage.setItem("userAdminModel", JSON.stringify(user));
     return {
         type: ActionTypes.LOGIN,
         payload: user
@@ -13,15 +13,15 @@ export const setLogin = (user) => {
 };
 
 export const updateUser = (user) => {
-    window.localStorage.setItem("userModel", JSON.stringify(user));
+    window.localStorage.setItem("userAdminModel", JSON.stringify(user));
     return {
         type: ActionTypes.LOGIN,
         payload: user
     }
 };
-// window.localStorage.removeItem("userModel");
+// window.localStorage.removeItem("userAdminModel");
 export const setLogout = () => {
-    window.localStorage.removeItem("userModel");
+    window.localStorage.removeItem("userAdminModel");
     return {
         type: ActionTypes.LOGOUT,
         payload: {}
