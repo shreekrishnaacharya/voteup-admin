@@ -4,7 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 import Status404 from 'view/pages/Status404';
 import DashboardController from './dashboard';
 import FeedController from './feed';
-import ViewPost from './post/view2/ViewPost';
+import ViewPost from './post/view/ViewPost';
 import ReportController from './report/';
 import SettingController from './setting';
 import VoterController from './voter/';
