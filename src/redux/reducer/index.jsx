@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 import { userReducer } from "./userReducer";
 import { profileReducer } from "./profileReducer";
-// import { menuReducer } from "./menuReducer";
+import { menuReducer } from "./menuReducer";
 import { voterListReducer } from "./voterReducer";
 // import { vendDetailReducer, vendListReducer } from "./vendReducer";
 // import { contactDetailReducer, contactListReducer } from "./contactReducer";
@@ -12,7 +12,7 @@ import { dboardReducer } from "./dboardReducer";
 const reducers = combineReducers({
     user: userReducer,
     profile: profileReducer,
-    // menu: menuReducer,
+    menu: menuReducer,
     // voterDetail: voterDetailReducer,
     voterList: voterListReducer,
     // vendList: vendListReducer,

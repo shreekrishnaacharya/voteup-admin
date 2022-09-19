@@ -26,11 +26,12 @@ async function getDashboard() {
 }
 
 
-async function getFeeds() {
+async function getFeeds(data) {
     return await getApiRequest({
         url: "/feeds",
         data: {
-            size: 5
+            size: 5,
+            ...data
         }
     }).then((result) => {
         return result;

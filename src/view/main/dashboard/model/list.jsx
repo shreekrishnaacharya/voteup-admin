@@ -79,7 +79,6 @@ function Text({ text, edge, warpLength }) {
 
 
 function Status({ status }) {
-  console.log(status)
   return (
     <Badge variant="gradient" badgeContent={StatusList[status].name} color={StatusList[status].color} size="extra-small" />
   );

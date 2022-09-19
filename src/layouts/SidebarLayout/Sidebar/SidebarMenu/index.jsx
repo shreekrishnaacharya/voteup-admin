@@ -29,6 +29,8 @@ import WorkspacePremiumTwoToneIcon from '@mui/icons-material/WorkspacePremiumTwo
 import CameraFrontTwoToneIcon from '@mui/icons-material/CameraFrontTwoTone';
 import DisplaySettingsTwoToneIcon from '@mui/icons-material/DisplaySettingsTwoTone';
 import { pages } from 'links';
+import { useDispatch } from 'react-redux';
+import { setMiniSideNav } from 'redux/action/menuAction';
 
 const MenuWrapper = styled(Box)(
   ({ theme }) => `
@@ -172,7 +174,10 @@ const SubMenuWrapper = styled(Box)(
 );
 
 function SidebarMenu() {
-
+  const dispatch = useDispatch();
+  const closeSidebar = () => {
+    dispatch(setMiniSideNav(false))
+  }
   return (
     <>
       <MenuWrapper>
@@ -190,6 +195,7 @@ function SidebarMenu() {
                 <Button
                   disableRipple
                   component={RouterLink}
+                  onClick={closeSidebar}
                   exact
                   to={pages.HOME}
                   startIcon={<DesignServicesTwoToneIcon />}
@@ -201,6 +207,7 @@ function SidebarMenu() {
                 <Button
                   disableRipple
                   component={RouterLink}
+                  onClick={closeSidebar}
                   to={pages.FEEDS}
                   startIcon={<HowToVoteTwoToneIcon />}
                 >
@@ -211,6 +218,7 @@ function SidebarMenu() {
                 <Button
                   disableRipple
                   component={RouterLink}
+                  onClick={closeSidebar}
                   to={pages.VOTER}
                   startIcon={<AccountCircleTwoToneIcon />}
                 >
@@ -221,7 +229,7 @@ function SidebarMenu() {
                 <Button
                   disableRipple
                   component={RouterLink}
-                  // onClick={closeSidebar}
+                  onClick={closeSidebar}
                   to={pages.REPORT}
                   startIcon={<MmsTwoToneIcon />}
                 >
@@ -232,6 +240,7 @@ function SidebarMenu() {
                 <Button
                   disableRipple
                   component={RouterLink}
+                  onClick={closeSidebar}
                   to={pages.SETTING}
                   startIcon={<SettingsTwoToneIcon />}
                 >

@@ -111,7 +111,6 @@ const modelListEmpty = () => {
 // }
 
 const modelPages = (pagination, handleNav) => {
-  console.log(pagination)
   return (
     <Pagination variant="outlined"
       count={Math.ceil(pagination.total / pagination.size)}

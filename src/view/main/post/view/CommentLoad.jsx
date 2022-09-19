@@ -33,13 +33,11 @@ export default function CommentLoad() {
                     alignItems: 'center',
                     justifyContent: 'space-between'
                 }}
+                mx={1}
             >
                 <Stack direction="row" spacing={0} justifyContent="space-between">
                     <Button disabled size='small' startIcon={<ThumbUpAltTwoTone />} variant={"outlined"}>
-                        Like
-                    </Button>
-                    <Button disabled size='small' startIcon={<ThumbDownAltTwoTone />} variant={"outlined"}>
-                        Dislike
+                        Vote
                     </Button>
                 </Stack>
             </CardActionsWrapper>

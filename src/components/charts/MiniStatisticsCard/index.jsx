@@ -13,8 +13,8 @@ function MiniStatisticsCard({ backgroundColor, title, count, percentage, icon, d
       <Box sx={{ backgroundColor: theme.colors[backgroundColor] }}>
         <Box p={2}>
           <Grid container alignItems="center">
-            {direction === "left" ? (
-              <Grid item>
+            {direction === "left" && (
+              <Grid item xs={4}>
                 <Box
                   sx={{
                     backgroundColor: boxColor,
@@ -34,7 +34,7 @@ function MiniStatisticsCard({ backgroundColor, title, count, percentage, icon, d
                   </Icon>
                 </Box>
               </Grid>
-            ) : null}
+            )}
             <Grid item xs={8}>
               <Box ml={direction === "left" ? 2 : 0}>
                 <Typography
@@ -67,7 +67,7 @@ function MiniStatisticsCard({ backgroundColor, title, count, percentage, icon, d
                 </Typography>
               </Box>
             </Grid>
-            {direction === "right" ? (
+            {direction === "right" && (
               <Grid item xs={4}>
                 <Box
                   sx={{
@@ -81,7 +81,7 @@ function MiniStatisticsCard({ backgroundColor, title, count, percentage, icon, d
                     alignItems: "center",
                     color: backgroundColor === "white" ? "white" : "dark",
                     boxShadow: "4px",
-                    backgroundGradient
+                    backgroundGradient,
                   }}
                 >
                   <Icon fontSize="small" color="inherit">
@@ -89,7 +89,7 @@ function MiniStatisticsCard({ backgroundColor, title, count, percentage, icon, d
                   </Icon>
                 </Box>
               </Grid>
-            ) : null}
+            )}
           </Grid>
         </Box>
       </Box>

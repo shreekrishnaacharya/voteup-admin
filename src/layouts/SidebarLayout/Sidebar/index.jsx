@@ -9,11 +9,15 @@ import {
   useTheme,
   Button,
   lighten,
-  darken
+  darken,
+  SwipeableDrawer
 } from '@mui/material';
 
 import SidebarMenu from './SidebarMenu';
 import Logo from 'components/Logo';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { setMiniSideNav } from 'redux/action/menuAction';
 
 const SidebarWrapper = styled(Box)(
   ({ theme }) => `
@@ -29,10 +33,12 @@ const SidebarWrapper = styled(Box)(
 );
 
 function Sidebar() {
-  // const { sidebarToggle, toggleSidebar } = useContext(SidebarContext);
-  // const closeSidebar = () => toggleSidebar();
+  const menuState = useSelector(state => state.menu.miniSidenav);
+  const dispatch = useDispatch();
   const theme = useTheme();
-
+  const closeSidebar = () => {
+    dispatch(setMiniSideNav(!menuState))
+  }
   return (
     <>
       <SidebarWrapper
@@ -56,18 +62,21 @@ function Sidebar() {
           <SidebarMenu />
         </Scrollbar>
       </SidebarWrapper>
-      <Drawer
+      <SwipeableDrawer
         sx={{
           boxShadow: `${theme.sidebar.boxShadow}`
         }}
-        anchor={theme.direction === 'rtl' ? 'right' : 'left'}
-        // open={true}
-        // onClose={closeSidebar}
+        anchor={'left'}
+        open={menuState}
+        onClose={closeSidebar}
         variant="temporary"
         elevation={9}
       >
         <SidebarWrapper
           sx={{
+            position: 'fixed',
+            left: 0,
+            top: 0,
             background:
               theme.palette.mode === 'dark'
                 ? theme.colors.alpha.white[100]
@@ -78,7 +87,7 @@ function Sidebar() {
             <SidebarMenu />
           </Scrollbar>
         </SidebarWrapper>
-      </Drawer>
+      </SwipeableDrawer>
     </>
   );
 }

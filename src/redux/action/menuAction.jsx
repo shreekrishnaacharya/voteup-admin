@@ -7,23 +7,7 @@ const setMiniSideNav = (menu) => {
     }
 };
 
-const setTranNavBar = (menu) => {
-    return {
-        type: MenuAction.TRANSPARENT_NAVBAR,
-        payload: menu
-    }
-};
-
-const setFixNavBar = (menu) => {
-    return {
-        type: MenuAction.FIXED_NAVBAR,
-        payload: menu
-    }
-};
-
 export {
-    setFixNavBar,
-    setTranNavBar,
     setMiniSideNav
 }
 

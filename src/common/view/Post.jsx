@@ -12,8 +12,10 @@ import {
     CardActions,
     Link,
     styled,
+    Stack,
     Menu,
     MenuItem,
+    Chip,
     Grid
 } from '@mui/material';
 
@@ -21,7 +23,8 @@ import MoreHorizTwoToneIcon from '@mui/icons-material/MoreHorizTwoTone';
 import ShareTwoToneIcon from '@mui/icons-material/ShareTwoTone';
 import Text from 'components/Text';
 import ReactTimeAgo from 'react-time-ago'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { actionUpdate } from "../service";
 import CommentTwoToneIcon from '@mui/icons-material/CommentTwoTone';
 import VoteButton from 'components/buttons/VoteButtons';
 import ImageList from '@mui/material/ImageList';
@@ -32,6 +35,7 @@ import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 import PollIcon from '@mui/icons-material/Poll';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import { StatusCode, StatusList } from 'links/constant';
+import { CopyToClipboard } from '_services';
 const CardActionsWrapper = styled(CardActions)(
     ({ theme }) => `
        background: ${theme.colors.alpha.black[5]};
@@ -41,7 +45,7 @@ const CardActionsWrapper = styled(CardActions)(
 
 
 
-function Post({ post, viewPost, isOpen }) {
+function Post({ post, viewPost, isOpen, toaster }) {
     // console.log(post)
     // const [paction, setPaction] = useState({
     //     votes: post.votes,
@@ -59,10 +63,7 @@ function Post({ post, viewPost, isOpen }) {
     const handleOptionClose = () => {
         setAnchorEl(null);
     };
-    const handleOptionAction = (type) => {
-        onMenu(post._id, type)
-        setAnchorEl(null);
-    }
+ 
 
     // useEffect(() => {
     //     setPaction(post);
@@ -121,16 +122,6 @@ function Post({ post, viewPost, isOpen }) {
             <Card>
                 <CardHeader
                     avatar={<Avatar src={post.user_dp} />}
-                    action={
-                        <>
-                            <IconButton
-                                color="primary"
-                                onClick={handleOptionClick}
-                            >
-                                <MoreHorizTwoToneIcon fontSize="medium" />
-                            </IconButton>
-                        </>
-                    }
                     titleTypographyProps={{ variant: 'h4' }}
                     subheaderTypographyProps={{ variant: 'subtitle2' }}
                     title={post.username}
@@ -158,7 +149,8 @@ function Post({ post, viewPost, isOpen }) {
                 <Divider />
                 <CardActionsWrapper
                     sx={{
-                        display: { xs: 'block', md: 'flex' },
+                        display: { xs: 'flex', md: 'flex' },
+                        py: 1.5,
                         alignItems: 'center',
                         justifyContent: 'space-between'
                     }}
@@ -171,24 +163,38 @@ function Post({ post, viewPost, isOpen }) {
                         alignItems="center"
                     >
                         <Grid item xl={6} >
-                            <Grid container direction={'row'} spacing={1}>
+                            <Grid container direction={'row'}>
                                 <Grid item xl={6}>
-                                    {!isOpen && (
+                                    {isOpen ? (
+                                        <>
+                                            {post.statusCode == StatusCode.VOTING && (
+                                                <VoteButton post={post}
+                                                    sx={{ mr: { xs: 0.5, md: 2 } }}
+                                                    onClick={onVote} hasVote={post.hasVote} />
+                                            )}
+                                        </>
+                                    ) : (
                                         <Button
                                             startIcon={<CommentTwoToneIcon />}
                                             variant="outlined"
-                                            sx={{ mx: 2 }}
+                                            sx={{ mr: { xs: 0.5, md: 2 } }}
                                             onClick={() => {
                                                 viewPost(post._id)
                                             }}
                                         >
-                                            Review
+                                            View
                                         </Button>
                                     )}
-
                                 </Grid>
                                 <Grid item xl={6}>
-                                    <Button startIcon={<ShareTwoToneIcon />} variant="outlined">
+                                    <Button
+                                        startIcon={<ShareTwoToneIcon />}
+                                        variant="outlined"
+                                        onClick={() => {
+                                            CopyToClipboard(post.link)
+                                            toaster('Link copied!!!')
+                                        }}
+                                    >
                                         Share
                                     </Button>
                                 </Grid>
@@ -211,7 +217,7 @@ function Post({ post, viewPost, isOpen }) {
                                 >
                                     <QuestionAnswerIcon sx={{ mr: 1 }} />{post.review}
                                 </Text>
-                                {post.statusCode > StatusCode.REVIEW && (
+                                {post.statusCode > StatusCode.VOTING && (
                                     <>{'|'}
                                         <Text
                                             sx={{ display: 'flex', mx: 1 }}
@@ -238,7 +244,10 @@ function Post({ post, viewPost, isOpen }) {
 
 Post.propTypes = {
     post: PropTypes.object.isRequired,
+    onMenu: PropTypes.func.isRequired,
+    userModel: PropTypes.object.isRequired,
     viewPost: PropTypes.func.isRequired,
+    onVote: PropTypes.func,
     isOpen: PropTypes.bool
 }
 

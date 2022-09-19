@@ -5,14 +5,19 @@ import {
   lighten,
   Divider,
   styled,
-  useTheme
+  useTheme,
+  Tooltip,
+  IconButton
 } from '@mui/material';
 
 import HeaderButtons from './Buttons';
 import HeaderUserbox from './Userbox';
 import HeaderLogo from 'components/Logo';
 import { pages } from 'links';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { setMiniSideNav } from 'redux/action/menuAction';
+import CloseTwoToneIcon from '@mui/icons-material/CloseTwoTone';
+import MenuTwoToneIcon from '@mui/icons-material/MenuTwoTone';
 const HeaderWrapper = styled(Box)(
   ({ theme }) => `
         height: ${theme.header.height};
@@ -31,7 +36,12 @@ const HeaderWrapper = styled(Box)(
 
 function Header() {
   // const { sidebarToggle, toggleSidebar } = useContext(SidebarContext);
+  const sidebarToggle = useSelector(state => state.menu.miniSidenav);
+  const dispatch = useDispatch();
   const theme = useTheme();
+  const toggleSidebar = () => {
+    dispatch(setMiniSideNav(!sidebarToggle))
+  }
 
   return (
     <HeaderWrapper
@@ -64,7 +74,7 @@ function Header() {
       <Box display="flex" alignItems="center">
         <HeaderButtons />
         <HeaderUserbox />
-        {/* <Box
+        <Box
           component="span"
           sx={{
             ml: 2,
@@ -80,7 +90,7 @@ function Header() {
               )}
             </IconButton>
           </Tooltip>
-        </Box> */}
+        </Box>
       </Box>
     </HeaderWrapper>
   );

@@ -29,7 +29,6 @@ function PostLoad({ isOpen }) {
                 <>
                     <Skeleton animation="wave" height={20} width="90%" style={{ marginTop: 6 }} />
                     <Skeleton animation="wave" height={20} width="50%" />
-                    <Skeleton animation="wave" height={20} width="70%" style={{ marginBottom: 6 }} />
                 </>
             </CardContent>
             <Divider />
@@ -37,17 +36,19 @@ function PostLoad({ isOpen }) {
                 sx={{
                     display: { xs: 'block', md: 'flex' },
                     alignItems: 'center',
+                    py: 1.5,
                     justifyContent: 'space-between'
                 }}
+
             >
-                <Stack direction="row" spacing={2} justifyContent="space-between">
+                <Stack direction="row" spacing={1} justifyContent="space-between">
                     {isOpen ? (
                         <Button disabled startIcon={<ThumbUpAltTwoTone />} variant={"outlined"}>
                             Vote
                         </Button>
                     ) : (
                         <Button disabled startIcon={<CommentTwoTone />} variant="outlined">
-                            Review
+                            View
                         </Button>
                     )}
                     <Button disabled startIcon={<ShareTwoTone />} variant="outlined">

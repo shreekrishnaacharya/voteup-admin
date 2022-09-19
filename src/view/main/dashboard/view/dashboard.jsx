@@ -42,7 +42,7 @@ function Dashboard() {
     <Box py={3}>
       <Box mb={3}>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={2}>
+          <Grid item xs={12} sm={6} md={2}>
             {minicard == null ? (
               <Skeleton height={80} variant="rounded" />
             ) : (
@@ -55,7 +55,7 @@ function Dashboard() {
             )}
 
           </Grid>
-          <Grid item xs={12} sm={2}>
+          <Grid item xs={12} sm={6} md={2}>
             {minicard == null ? (
               <Skeleton height={80} variant="rounded" />
             ) : (
@@ -67,7 +67,7 @@ function Dashboard() {
               />
             )}
           </Grid>
-          <Grid item xs={12} sm={2}>
+          <Grid item xs={12} sm={6} md={2}>
             {minicard == null ? (
               <Skeleton height={80} variant="rounded" />
             ) : (
@@ -79,7 +79,7 @@ function Dashboard() {
               />
             )}
           </Grid>
-          <Grid item xs={12} sm={2}>
+          <Grid item xs={12} sm={6} md={2}>
             {minicard == null ? (
               <Skeleton height={80} variant="rounded" />
             ) : (
@@ -91,7 +91,7 @@ function Dashboard() {
               />
             )}
           </Grid>
-          <Grid item xs={12} sm={2}>
+          <Grid item xs={12} sm={6} md={2}>
             {minicard == null ? (
               <Skeleton height={80} variant="rounded" />
             ) : (
@@ -132,13 +132,14 @@ function Dashboard() {
               chart={dboardData.salesPie}
             />
           </Grid> */}
-          <Grid item xs={12} lg={4}>
+          <Grid item xs={12} sm={6} lg={4}>
             {minicard == null ? (
               <Skeleton height={400} variant="rounded" />
             ) : (
               <PieChart
                 title="Voting Ratio"
-                height="26rem"
+                height={{ xs: '26rem', md: '36rem', lg: '26rem' }}
+                // sx={{ height: { xm: '56rem', md: '26rem' } }}
                 chart={dboardData.posts}
               />
             )}
