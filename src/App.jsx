@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import StoreController from "view";
 import Auth from "_base/Auth";
 // import { loadProgressBar } from 'axios-progress-bar';
-import 'axios-progress-bar/dist/nprogress.css';
+// import 'axios-progress-bar/dist/nprogress.css';
 import ThemeProvider from './theme/ThemeProvider';
 
 export default function App() {
