@@ -196,9 +196,14 @@ function ReportView() {
                         ) : (
                             <>
                                 {reportData.type === "POST" ? (
-                                    <Post post={postData} viewPost={viewPost} />
+                                    <Post
+                                        toaster={enqueueSnackbar}
+                                        post={postData} viewPost={viewPost} />
                                 ) : (
-                                    <Comment comment={{ ...postData, comment: postData.post_detail }} />
+                                    <Comment
+                                        toaster={enqueueSnackbar}
+                                        post={postData}
+                                        comment={{ ...postData, comment: postData.post_detail }} />
                                 )}
                             </>
                         )}

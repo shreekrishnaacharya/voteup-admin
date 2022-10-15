@@ -23,9 +23,10 @@ import * as yup from "yup";
 import { updateSetting, getSetting } from "../service";
 
 const schema = yup.object({
-    review_limit: yup.number().min(1).required("Review period is required"),
-    vote_limit: yup.number().min(1).required("Voting period is required"),
-    approve_on: yup.number().min(1).required("Approve at is required"),
+    review_limit: yup.number().min(0).required("Review period is required"),
+    vote_limit: yup.number().min(0).required("Voting period is required"),
+    approve_on: yup.number().min(50).required("Approve at is required"),
+    comment_limit: yup.number().min(0).required("Comment limit is required"),
 });
 export default function Setting() {
     const [editForm, setEditForm] = useState(false)
@@ -194,6 +195,40 @@ export default function Setting() {
                                 ) : (
                                     <Text color="black">
                                         <b>{settingData.approve_on}</b> Percent(%)
+                                    </Text>
+                                )
+                                }
+                            </Grid>
+                            <Grid item xs={12} sm={4} md={3} textAlign={{ sm: 'right' }}>
+                                <Box pr={3} pb={2}>
+                                    Comment Limit:
+                                </Box>
+                            </Grid>
+                            <Grid item xs={12} sm={8} md={9}>
+                                {editForm ? (
+                                    <Controller
+                                        name="comment_limit"
+                                        defaultValue={settingData.comment_limit}
+                                        control={control}
+                                        render={({ field, fieldState }) => (
+                                            <>
+                                                <TextField
+                                                    sx={{ width: "50%" }}
+                                                    variant="standard"
+                                                    {...field}
+                                                    type={'number'}
+                                                />
+                                                {fieldState.error && (
+                                                    <FormHelperText error>
+                                                        {fieldState.error?.message}
+                                                    </FormHelperText>
+                                                )}
+                                            </>
+                                        )}
+                                    />
+                                ) : (
+                                    <Text color="black">
+                                        <b>{settingData.comment_limit}</b>
                                     </Text>
                                 )
                                 }

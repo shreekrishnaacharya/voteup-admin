@@ -78,7 +78,7 @@ function Comment({ comment, post, toaster }) {
                                 >
                                     Share
                                 </Button>
-                                {post.ptype == 1 && (
+                                {comment.ptype == 1 && (
                                     <Button
                                         component={Link}
                                         to={"post?id=" + comment.parent_id}
@@ -109,12 +109,12 @@ function Comment({ comment, post, toaster }) {
                                     )}
                                     {post.statusCode > StatusCode.VOTING && (
                                         <>
-                                            {/* <Text
+                                            <Text
                                                 sx={{ display: 'flex', mr: 1 }}
                                                 color={StatusList[comment.statusCode].color}
                                             >
                                                 {StatusList[comment.statusCode].icon}{comment.status}
-                                            </Text> */}
+                                            </Text>
                                             {'|'}
                                             <Text
                                                 sx={{ display: 'flex', mx: 1 }}

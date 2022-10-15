@@ -67,7 +67,6 @@ const ViewPost = () => {
                     <>
 
                         {postFeeds.ptype == 0 ? (
-
                             <Post toaster={enqueueSnackbar}
                                 // flash={postid === postFeeds.post_id} 
                                 isOpen={true} key={postFeeds._id} post={postFeeds} viewPost={() => { }} />
@@ -78,7 +77,7 @@ const ViewPost = () => {
                         )}
 
 
-                        {postFeeds.ptype == 0 && (
+                        {postFeeds.ptype == 0 && postFeeds.comments.length > 0 && (
                             <Box sx={{ marginLeft: '40px' }}>
                                 <Text varient={'h1'}>Amend/Dissent</Text>
                                 {postFeeds.comments.map(comment => {
