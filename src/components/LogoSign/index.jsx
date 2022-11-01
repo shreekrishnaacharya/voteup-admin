@@ -1,12 +1,7 @@
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 
 // material-ui
-import { Box, ButtonBase } from '@mui/material';
 import logo from 'assets/images/logo.png'
-// project import
-import Logo from './Logo';
-import { pages } from 'links';
 
 // ==============================|| MAIN LOGO ||============================== //
 

@@ -5,7 +5,7 @@
   "author": "Krishna Acharya",
   "license": "MIT Licenses",
   "description": "",
-  "homepage": "http://ventvoila/admin",
+  "homepage": "http://ventvoila/static/admin",
   "dependencies": {
     "@ant-design/colors": "^4.0.0-alpha.0",
     "@ant-design/icons": "^4.0.0-rc.0",

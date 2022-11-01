@@ -6,7 +6,6 @@ import { ButtonBase } from '@mui/material';
 
 // project import
 import Logo from './Logo';
-import { pages } from 'links';
 
 // ==============================|| MAIN LOGO ||============================== //
 
