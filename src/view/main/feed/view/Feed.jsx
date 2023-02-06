@@ -5,8 +5,6 @@ import Post from "common/view/Post";
 import PostLoad from "common/view/PostLoad";
 import { useHistory } from "react-router-dom";
 import { pages } from "links";
-import { useSnackbar } from 'notistack';
-import { isEmpty } from "_services";
 
 const Feed = ({ userModel, feedType }) => {
   const history = useHistory();
