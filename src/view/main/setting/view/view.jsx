@@ -41,7 +41,7 @@ export default function Setting() {
   });
   const [settingData, setSetting] = useState(null);
   const { enqueueSnackbar } = useSnackbar();
-
+  console.log(errors);
   const saveAction = (fdata) => {
     updateSetting(fdata).then((e) => {
       if (e.flag) {
@@ -201,12 +201,12 @@ export default function Setting() {
                 <Grid item xs={12} sm={8} md={9}>
                   {editForm ? (
                     <Controller
-                      name="vote_limit"
-                      defaultValue={settingData.vote_limit}
+                      name="mandate_limit"
+                      defaultValue={settingData.mandate_limit}
                       control={control}
                       render={({ field, fieldState }) => (
                         <>
-                          <TextField
+                          <Input
                             sx={{ width: '50%' }}
                             variant="standard"
                             {...field}
@@ -223,7 +223,7 @@ export default function Setting() {
                     />
                   ) : (
                     <Text color="black">
-                      <b>{settingData.vote_limit}</b> Day(s)
+                      <b>{settingData.mandate_limit}</b> Day(s)
                     </Text>
                   )}
                 </Grid>
@@ -270,7 +270,7 @@ export default function Setting() {
                   {editForm ? (
                     <Controller
                       name="mandate_on"
-                      defaultValue={settingData.approve_on}
+                      defaultValue={settingData.mandate_on}
                       control={control}
                       render={({ field, fieldState }) => (
                         <>
@@ -291,7 +291,7 @@ export default function Setting() {
                     />
                   ) : (
                     <Text color="black">
-                      <b>{settingData.approve_on}</b> Percent(%)
+                      <b>{settingData.mandate_on}</b> Percent(%)
                     </Text>
                   )}
                 </Grid>
