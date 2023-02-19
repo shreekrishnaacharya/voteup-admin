@@ -78,7 +78,7 @@ function Comment({ comment, post, toaster }) {
                                 >
                                     Share
                                 </Button>
-                                {comment.ptype == 1 && (
+                                {post.ptype == 1 && (
                                     <Button
                                         component={Link}
                                         to={"post?id=" + comment.parent_id}

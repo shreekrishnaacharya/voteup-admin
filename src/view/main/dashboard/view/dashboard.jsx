@@ -1,31 +1,33 @@
-import { useEffect } from "react";
-import { Grid, Box, Skeleton } from "@mui/material";
+import { useEffect } from 'react';
+import { Grid, Box, Skeleton } from '@mui/material';
 
-import MiniStatisticsCard from "components/charts/MiniStatisticsCard";
+import MiniStatisticsCard from 'components/charts/MiniStatisticsCard';
 // import ReportsBarChart from "components/charts/BarCharts/ReportsBarChart";
-import GradientLineChart from "components/charts/LineCharts/GradientLineChart";
-import PieChart from "components/charts/PieChart";
+import GradientLineChart from 'components/charts/LineCharts/GradientLineChart';
+import PieChart from 'components/charts/PieChart';
 
-import { getLineChart, getPostsPie } from "../model/list";
-import { getDashboard } from "../service";
-import { useDispatch, useSelector } from "react-redux";
-import { setDashboard } from "redux/action/dboardAction";
-import RecentPost from "./recentPost";
+import { getLineChart, getPostsPie } from '../model/list';
+import { getDashboard } from '../service';
+import { useDispatch, useSelector } from 'react-redux';
+import { setDashboard } from 'redux/action/dboardAction';
+import RecentPost from './recentPost';
 
 function Dashboard() {
-  const dboardData = useSelector(state => state.dboard);
+  const dboardData = useSelector((state) => state.dboard);
   const dispatch = useDispatch();
   async function loadData() {
     await getDashboard().then((res) => {
-      console.log(res)
+      console.log(res);
       if (res.flag) {
-        console.log(getLineChart(res.data.trend));
+        console.log(getPostsPie(res.data.posts));
         if (Object.keys(res.data).length) {
-          dispatch(setDashboard({
-            minicard: res.data.minicard,
-            line: getLineChart(res.data.trend),
-            posts: getPostsPie(res.data.posts),
-          }));
+          dispatch(
+            setDashboard({
+              minicard: res.data.minicard,
+              line: getLineChart(res.data.trend),
+              posts: getPostsPie(res.data.posts)
+            })
+          );
         } else {
           dispatch(setDashboard({}));
         }
@@ -47,23 +49,10 @@ function Dashboard() {
               <Skeleton height={80} variant="rounded" />
             ) : (
               <MiniStatisticsCard
-                title={{ text: "Users" }}
-                count={minicard.users.new}
-                percentage={{ color: "success", text: minicard.users.total }}
-                icon={{ color: "primary", component: "people" }}
-              />
-            )}
-
-          </Grid>
-          <Grid item xs={12} sm={6} md={2}>
-            {minicard == null ? (
-              <Skeleton height={80} variant="rounded" />
-            ) : (
-              <MiniStatisticsCard
-                title={{ text: "Post" }}
-                count={minicard.post.new}
-                percentage={{ color: "success", text: minicard.post.total }}
-                icon={{ color: "info", component: "public" }}
+                title={{ text: 'Users' }}
+                count={Boolean(minicard.users.new) ? minicard.users.new : 0}
+                percentage={{ color: 'success', text: minicard.users.total }}
+                icon={{ color: 'primary', component: 'people' }}
               />
             )}
           </Grid>
@@ -72,10 +61,10 @@ function Dashboard() {
               <Skeleton height={80} variant="rounded" />
             ) : (
               <MiniStatisticsCard
-                title={{ text: "Review" }}
-                count={minicard.comments.new}
-                percentage={{ color: "success", text: minicard.comments.total }}
-                icon={{ color: "warning", component: "comment" }}
+                title={{ text: 'Post' }}
+                count={Boolean(minicard.post.new) ? minicard.post.new : 0}
+                percentage={{ color: 'success', text: minicard.post.total }}
+                icon={{ color: 'info', component: 'public' }}
               />
             )}
           </Grid>
@@ -84,10 +73,12 @@ function Dashboard() {
               <Skeleton height={80} variant="rounded" />
             ) : (
               <MiniStatisticsCard
-                title={{ text: "Votes" }}
-                count={minicard.vote.new}
-                percentage={{ color: "success", text: minicard.vote.total }}
-                icon={{ color: "success", component: "thumbs_up_down" }}
+                title={{ text: 'Review' }}
+                count={
+                  Boolean(minicard.comments.new) ? minicard.comments.new : 0
+                }
+                percentage={{ color: 'success', text: minicard.comments.total }}
+                icon={{ color: 'warning', component: 'comment' }}
               />
             )}
           </Grid>
@@ -96,10 +87,22 @@ function Dashboard() {
               <Skeleton height={80} variant="rounded" />
             ) : (
               <MiniStatisticsCard
-                title={{ text: "Report" }}
-                count={minicard.report.new}
-                percentage={{ color: "success", text: minicard.report.total }}
-                icon={{ color: "error", component: "poll" }}
+                title={{ text: 'Votes' }}
+                count={Boolean(minicard.vote.new) ? minicard.vote.new : 0}
+                percentage={{ color: 'success', text: minicard.vote.total }}
+                icon={{ color: 'success', component: 'thumbs_up_down' }}
+              />
+            )}
+          </Grid>
+          <Grid item xs={12} sm={6} md={2}>
+            {minicard == null ? (
+              <Skeleton height={80} variant="rounded" />
+            ) : (
+              <MiniStatisticsCard
+                title={{ text: 'Report' }}
+                count={Boolean(minicard.report.new) ? minicard.report.new : 0}
+                percentage={{ color: 'success', text: minicard.report.total }}
+                icon={{ color: 'error', component: 'poll' }}
               />
             )}
           </Grid>
@@ -117,7 +120,6 @@ function Dashboard() {
                 chart={dboardData.line}
               />
             )}
-
           </Grid>
           {/* <Grid item xs={12} lg={4}>
             <ReportsBarChart
@@ -143,7 +145,6 @@ function Dashboard() {
                 chart={dboardData.posts}
               />
             )}
-
           </Grid>
         </Grid>
       </Box>
@@ -153,6 +154,5 @@ function Dashboard() {
     </Box>
   );
 }
-
 
 export default Dashboard;
