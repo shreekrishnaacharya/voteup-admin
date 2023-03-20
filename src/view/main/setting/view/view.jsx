@@ -26,8 +26,9 @@ const schema = yup.object({
   review_limit: yup.number().min(0).required('Review period is required'),
   vote_limit: yup.number().min(0).required('Voting period is required'),
   mandate_limit: yup.number().min(0).required('Mandate period is required'),
+  vote_ref_limit: yup.number().min(0).required('Referendum period is required'),
   approve_on: yup.number().min(50).required('Approve at is required'),
-  mandate_on: yup.number().min(50).required('Mandate at is required'),
+  // mandate_on: yup.number().min(50).required('Mandate at is required'),
   comment_limit: yup.number().min(0).required('Comment limit is required')
 });
 export default function Setting() {
@@ -41,7 +42,7 @@ export default function Setting() {
   });
   const [settingData, setSetting] = useState(null);
   const { enqueueSnackbar } = useSnackbar();
-  console.log(errors);
+  // console.log(errors);
   const saveAction = (fdata) => {
     updateSetting(fdata).then((e) => {
       if (e.flag) {
@@ -229,6 +230,40 @@ export default function Setting() {
                 </Grid>
                 <Grid item xs={12} sm={4} md={3} textAlign={{ sm: 'right' }}>
                   <Box pr={3} pb={2}>
+                    Referendum vote period:
+                  </Box>
+                </Grid>
+                <Grid item xs={12} sm={8} md={9}>
+                  {editForm ? (
+                    <Controller
+                      name="vote_ref_limit"
+                      defaultValue={settingData.vote_ref_limit}
+                      control={control}
+                      render={({ field, fieldState }) => (
+                        <>
+                          <Input
+                            sx={{ width: '50%' }}
+                            variant="standard"
+                            {...field}
+                            type={'number'}
+                          />{' '}
+                          Day(s)
+                          {fieldState.error && (
+                            <FormHelperText error>
+                              {fieldState.error?.message}
+                            </FormHelperText>
+                          )}
+                        </>
+                      )}
+                    />
+                  ) : (
+                    <Text color="black">
+                      <b>{settingData.vote_ref_limit}</b> Day(s)
+                    </Text>
+                  )}
+                </Grid>
+                <Grid item xs={12} sm={4} md={3} textAlign={{ sm: 'right' }}>
+                  <Box pr={3} pb={2}>
                     Approve On:
                   </Box>
                 </Grid>
@@ -258,40 +293,6 @@ export default function Setting() {
                   ) : (
                     <Text color="black">
                       <b>{settingData.approve_on}</b> Percent(%)
-                    </Text>
-                  )}
-                </Grid>
-                <Grid item xs={12} sm={4} md={3} textAlign={{ sm: 'right' }}>
-                  <Box pr={3} pb={2}>
-                    Mandate On:
-                  </Box>
-                </Grid>
-                <Grid item xs={12} sm={8} md={9}>
-                  {editForm ? (
-                    <Controller
-                      name="mandate_on"
-                      defaultValue={settingData.mandate_on}
-                      control={control}
-                      render={({ field, fieldState }) => (
-                        <>
-                          <TextField
-                            sx={{ width: '50%' }}
-                            variant="standard"
-                            {...field}
-                            type={'number'}
-                          />{' '}
-                          Percent(%)
-                          {fieldState.error && (
-                            <FormHelperText error>
-                              {fieldState.error?.message}
-                            </FormHelperText>
-                          )}
-                        </>
-                      )}
-                    />
-                  ) : (
-                    <Text color="black">
-                      <b>{settingData.mandate_on}</b> Percent(%)
                     </Text>
                   )}
                 </Grid>

@@ -5,7 +5,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import PendingIcon from '@mui/icons-material/Pending';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import GppGoodIcon from '@mui/icons-material/GppGood';
-
+import ThumbsUpDownIcon from '@mui/icons-material/ThumbsUpDown';
 const KycTypes = Object.freeze({
   LICENSES: 0,
   CITIZENSHIP: 1,
@@ -43,10 +43,11 @@ const KycStatusList = {
 const StatusCode = Object.freeze({
   REVIEW: 0,
   VOTING: 1,
-  RESULT: 2,
+  RESULT: [3, 4],
   ACCEPT: 3,
   REJECT: 4,
-  MANDATE: 5
+  MANDATE: 5,
+  REFERENDUM: 5
 });
 
 const StatusList = {
@@ -71,6 +72,10 @@ const StatusList = {
     icon: <ErrorIcon sx={{ mr: 1 }} />
   },
   [StatusCode.MANDATE]: {
+    name: 'Vote for Referendum',
+    icon: <ThumbsUpDownIcon sx={{ mr: 1, color: '#ddd013' }} />
+  },
+  [StatusCode.REFERENDUM]: {
     name: 'Referendum',
     icon: <GppGoodIcon sx={{ mr: 1, color: '#00897b' }} />
   }

@@ -38,8 +38,8 @@ const sitePage = {
 }
 
 const pages = {
-    BASE_URL: "/api/admin",
-    // BASE_URL: "http://ventvoila.com/api/admin",
+    // BASE_URL: "/api/admin",
+    BASE_URL: "http://ventvoila.com/api/admin",
     // BASE_URL: "http://localhost:8080/api/admin",
     // LOCAL_URL: "http://localhost:3000",
     GUEST: "/guest",
